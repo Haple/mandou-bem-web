@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
-import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
+import { FiMail, FiUser, FiLock } from 'react-icons/fi';
+import { BsBuilding } from 'react-icons/bs';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -11,12 +12,18 @@ import { useToast } from '~/hooks/toast';
 
 import getValidationErrors from '~/utils/getValidationErrors';
 
-import logo from '~/assets/logo.svg';
-
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-import { Container, Content, AnimationContainer, Background } from './styles';
+import drawCelebration from '~/assets/draw-celebration.svg';
+
+import {
+  Container,
+  Header,
+  HeaderContent,
+  Content,
+  AnimationContainer,
+} from './styles';
 
 interface SignUpFormData {
   name: string;
@@ -36,24 +43,28 @@ const SignUp: React.FC = () => {
 
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
+          company_name: Yup.string().required('Nome da empresa obrigatório'),
           email: Yup.string()
             .required('E-mail obrigatório')
             .email('Digite um e-mail válido'),
           password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+          password_confirmation: Yup.string()
+            .required()
+            .oneOf([Yup.ref('password')], 'As senhas precisam ser iguais'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await api.post('/users', data);
+        await api.post('/accounts', data);
 
         history.push('/');
 
         addToast({
           type: 'success',
           title: 'Cadastro realizado!',
-          description: 'Você já pode fazer seu logon no GoBarber',
+          description: 'Você já pode fazer seu logon no MandouBem',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -76,16 +87,32 @@ const SignUp: React.FC = () => {
 
   return (
     <Container>
-      <Background />
+      <Header>
+        <HeaderContent>
+          <h2>
+            Mandou <b>Bem</b>
+          </h2>
+        </HeaderContent>
+      </Header>
+
+      <img src={drawCelebration} alt="Ilustração de pessoas celebrando" />
 
       <Content>
+        <span>
+          Estamos super contentes de te ver por aqui!
+          <br />
+          <br />
+          Nos conte mais sobre você e veja como é fácil cuidar dos seus
+          colaboradores.
+        </span>
         <AnimationContainer>
-          <img src={logo} alt="GoBarber" />
-
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Faça seu cadastro</h1>
-
-            <Input name="name" icon={FiUser} placeholder="Nome" />
+            <Input
+              name="company_name"
+              icon={BsBuilding}
+              placeholder="Nome da empresa"
+            />
+            <Input name="name" icon={FiUser} placeholder="Seu nome completo" />
             <Input name="email" icon={FiMail} placeholder="E-mail" />
             <Input
               name="password"
@@ -93,14 +120,17 @@ const SignUp: React.FC = () => {
               type="password"
               placeholder="Senha"
             />
+            <Input
+              name="password_confirmation"
+              icon={FiLock}
+              type="password"
+              placeholder="Confirmação de Senha"
+            />
 
             <Button type="submit">Cadastrar</Button>
           </Form>
 
-          <Link to="/">
-            <FiArrowLeft />
-            Voltar para logon
-          </Link>
+          <Link to="/">Já tem uma conta?</Link>
         </AnimationContainer>
       </Content>
     </Container>

@@ -10,15 +10,17 @@ interface ContainerProps {
 
 export const Container = styled.div<ContainerProps>`
   background: #ffffff;
-  border-radius: 10px;
-  padding: 16px;
+  border-radius: 5px;
+  padding: 12px;
   width: 100%;
+  transition: border-color 0.2s;
 
   border: 2px solid #C5CED6;
   color: #666360;
 
   display: flex;
   align-items: center;
+
 
   & + div {
     margin-top: 8px;
@@ -52,7 +54,8 @@ export const Container = styled.div<ContainerProps>`
     color: #35434F;
 
     &::placeholder {
-      color: #CDD7E0;
+      color: #C5CED6;
+      font-weight: bold;
     }
   }
 

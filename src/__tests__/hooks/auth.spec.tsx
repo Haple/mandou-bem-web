@@ -33,11 +33,11 @@ describe('Auth hook', () => {
     await waitForNextUpdate();
 
     expect(setItemSpy).toHaveBeenCalledWith(
-      '@GoBarber:token',
+      '@MandouBem:token',
       apiResponse.token,
     );
     expect(setItemSpy).toHaveBeenCalledWith(
-      '@GoBarber:user',
+      '@MandouBem:user',
       JSON.stringify(apiResponse.user),
     );
 
@@ -47,9 +47,9 @@ describe('Auth hook', () => {
   it('should restore saved data from storage when auth inits', () => {
     jest.spyOn(Storage.prototype, 'getItem').mockImplementation((key) => {
       switch (key) {
-        case '@GoBarber:token':
+        case '@MandouBem:token':
           return 'token-123';
-        case '@GoBarber:user':
+        case '@MandouBem:user':
           return JSON.stringify({
             id: 'user-id',
             name: 'John Doe',
@@ -70,9 +70,9 @@ describe('Auth hook', () => {
   it('should be able to sign out', async () => {
     jest.spyOn(Storage.prototype, 'getItem').mockImplementation((key) => {
       switch (key) {
-        case '@GoBarber:token':
+        case '@MandouBem:token':
           return 'token-123';
-        case '@GoBarber:user':
+        case '@MandouBem:user':
           return JSON.stringify({
             id: 'user-id',
             name: 'John Doe',
@@ -116,7 +116,7 @@ describe('Auth hook', () => {
     });
 
     expect(setItemSpy).toHaveBeenCalledWith(
-      '@GoBarber:user',
+      '@MandouBem:user',
       JSON.stringify(user),
     );
 

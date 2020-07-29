@@ -3,13 +3,13 @@ import { shade } from 'polished';
 
 export const Container = styled.button`
   background: #7955c3;
-  height: 56px;
-  border-radius: 10px;
+  height: 50px;
+  border-radius: 5px;
   border: 0;
-  padding: 16px;
+  padding: 14px;
   color: #ffffff;
   width: 100%;
-  font-weight: 500;
+  font-weight: bold;
   margin-top: 16px;
   transition: background-color 0.2s;
 
