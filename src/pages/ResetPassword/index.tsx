@@ -8,12 +8,16 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useToast } from '~/hooks/toast';
 import getValidationErrors from '~/utils/getValidationErrors';
 
-import logo from '~/assets/logo.svg';
-
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-import { Container, Content, AnimationContainer, Background } from './styles';
+import {
+  Container,
+  Content,
+  AnimationContainer,
+  Header,
+  HeaderContent,
+} from './styles';
 import api from '~/services/api';
 
 interface ResetPasswordFormData {
@@ -81,13 +85,18 @@ const ResetPassword: React.FC = () => {
 
   return (
     <Container>
+      <Header>
+        <HeaderContent>
+          <h2>
+            Mandou <b>Bem</b>
+          </h2>
+        </HeaderContent>
+      </Header>
+
       <Content>
         <AnimationContainer>
-          <img src={logo} alt="GoBarber" />
-
+          <h2>Resetar senha</h2>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Resetar senha</h1>
-
             <Input
               name="password"
               icon={FiLock}
@@ -106,8 +115,6 @@ const ResetPassword: React.FC = () => {
           </Form>
         </AnimationContainer>
       </Content>
-
-      <Background />
     </Container>
   );
 };

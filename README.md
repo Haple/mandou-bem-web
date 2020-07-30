@@ -87,7 +87,7 @@
 
 ![image info](./github/images/7-perfil.png)
 
-##  Recuperar senha
+##  [OK] Recuperar senha
 
 **RF**
 

@@ -8,12 +8,16 @@ import { Link } from 'react-router-dom';
 import { useToast } from '~/hooks/toast';
 import getValidationErrors from '~/utils/getValidationErrors';
 
-import logo from '~assets/logo.svg';
-
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-import { Container, Content, AnimationContainer, Background } from './styles';
+import {
+  Container,
+  Content,
+  AnimationContainer,
+  Header,
+  HeaderContent,
+} from './styles';
 import api from '~/services/api';
 
 interface ForgotPasswordFormData {
@@ -79,13 +83,18 @@ const ForgotPassword: React.FC = () => {
 
   return (
     <Container>
+      <Header>
+        <HeaderContent>
+          <h2>
+            Mandou <b>Bem</b>
+          </h2>
+        </HeaderContent>
+      </Header>
+
       <Content>
         <AnimationContainer>
-          <img src={logo} alt="GoBarber" />
-
+          <h2>Recuperar senha</h2>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Recuperar senha</h1>
-
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
             <Button loading={loading} type="submit">
@@ -95,12 +104,10 @@ const ForgotPassword: React.FC = () => {
 
           <Link to="/">
             <FiLogIn />
-            Voltar ao logon
+            Voltar ao login
           </Link>
         </AnimationContainer>
       </Content>
-
-      <Background />
     </Container>
   );
 };
