@@ -12,6 +12,8 @@ import ResetPassword from '../pages/ResetPassword';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 
+import AdminPanel from '../pages/AdminPanel';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
@@ -21,6 +23,7 @@ const Routes: React.FC = () => (
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
+    <Route path="/admin-panel" component={AdminPanel} isPrivate isAdminOnly />
   </Switch>
 );
 
