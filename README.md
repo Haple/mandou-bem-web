@@ -116,7 +116,7 @@
 
 #  Requisitos Módulo 2
 
-##  Catálogo de prêmios
+## [OK] Catálogo de prêmios
 
 **RF**
 

@@ -11,6 +11,14 @@ export const Container = styled.div`
     margin-top: 20px;
     color: #788896;
   }
+
+  form {
+    h1 {
+      font-size: 16px;
+      color: #293845;
+      font-weight: bold;
+    }
+  }
 `;
 
 export const Content = styled.div`
