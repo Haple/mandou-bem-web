@@ -12,8 +12,7 @@ export const Container = styled.div`
   /* align-items: stretch; */
 
   > img {
-    max-height: 180px;
-    min-height: 140px;
+    max-height: 200px;
   }
 `;
 
@@ -42,7 +41,7 @@ export const Content = styled.div`
     margin-bottom: auto;
     margin-right: 100px;
     max-width: 450px;
-    font-size: 36px;
+    font-size: 30px;
   }
 `;
 

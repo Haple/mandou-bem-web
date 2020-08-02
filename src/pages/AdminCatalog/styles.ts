@@ -73,6 +73,7 @@ export const AddCatalogReward = styled.button`
   padding: 30px;
 
   color: #7955c3;
+  transition: opacity 0.2s;
 
   &:hover {
     opacity: 0.6;
