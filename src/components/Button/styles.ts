@@ -10,7 +10,7 @@ export const Container = styled.button<ContainerProps>`
   height: 40px;
   border-radius: 5px;
   border: 0;
-  padding: 5px;
+  padding: 10px;
   /* color: #ffffff; */
   width: 100%;
   font-weight: bold;
@@ -38,7 +38,7 @@ export const Container = styled.button<ContainerProps>`
       }
     `}
 
-  /* &:hover {
-    background: ${shade(0.2, '#7955C3')};
-  } */
+  svg {
+    margin-right: 10px;
+  }
 `;

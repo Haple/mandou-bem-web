@@ -13,9 +13,9 @@ const Header: React.FC = () => {
           Mandou <b>Bem</b>
         </h2>
         <nav>
-          <StyledLink to="/admin-panel/feed">Feed</StyledLink>
-          <StyledLink to="/admin-panel/profile">Meu Perfil</StyledLink>
-          <StyledLink to="/admin-panel/catalog">Catálogo</StyledLink>
+          <StyledLink to="/feed">Feed</StyledLink>
+          <StyledLink to="/profile">Meu Perfil</StyledLink>
+          <StyledLink to="/catalog">Catálogo</StyledLink>
           <StyledLink to="/admin-panel">Painel administrativo</StyledLink>
         </nav>
 

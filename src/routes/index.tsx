@@ -13,6 +13,7 @@ import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 
 import AdminPanel from '../pages/AdminPanel';
+import AdminCatalog from '../pages/AdminCatalog';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -23,7 +24,19 @@ const Routes: React.FC = () => (
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
-    <Route path="/admin-panel" component={AdminPanel} isPrivate isAdminOnly />
+    <Route
+      exact
+      path="/admin-panel"
+      component={AdminPanel}
+      isPrivate
+      isAdminOnly
+    />
+    <Route
+      path="/admin-panel/catalog"
+      component={AdminCatalog}
+      isPrivate
+      isAdminOnly
+    />
   </Switch>
 );
 

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useHistory } from 'react-router-dom';
 import Header from '~/components/Header';
 import people from '~/assets/draw-people.svg';
 import gift from '~/assets/draw-gift.svg';
@@ -9,6 +10,8 @@ import { Container, Content, Option } from './styles';
 import Button from '~/components/Button';
 
 const AdminPanel: React.FC = () => {
+  const history = useHistory();
+
   return (
     <>
       <Header />
@@ -23,7 +26,9 @@ const AdminPanel: React.FC = () => {
               src={gift}
               alt="Ilustração de um rapaz sentado em uma grande caixa de presentes"
             />
-            <Button light>Catálogo</Button>
+            <Button light onClick={() => history.push('/admin-panel/catalog')}>
+              Catálogo
+            </Button>
           </Option>
           <Option>
             <img
