@@ -46,6 +46,7 @@
 
 ![image info](./github/images/2-login.png)
 
+
 ##  Manter usuários
 
 **RF**
@@ -64,6 +65,7 @@
 - As senhas enviadas por e-mail devem ser randômicas;
 - O usuário admin não pode adicionar um colaborador com o e-mail de um usuário já cadastrado;
 
+[OK]
 ![image info](./github/images/8-admin-painel-administrativo.png)
 ![image info](./github/images/11-admin-editar-empregados.png)
 ![image info](./github/images/12-admin-editar-empregados-2.png)

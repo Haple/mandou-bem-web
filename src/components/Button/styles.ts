@@ -1,19 +1,44 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styled.button`
-  background: #7955c3;
-  height: 50px;
+interface ContainerProps {
+  light?: boolean;
+}
+
+export const Container = styled.button<ContainerProps>`
+  /* background: #7955c3; */
+  height: 40px;
   border-radius: 5px;
   border: 0;
-  padding: 14px;
-  color: #ffffff;
+  padding: 5px;
+  /* color: #ffffff; */
   width: 100%;
   font-weight: bold;
   margin-top: 16px;
   transition: background-color 0.2s;
 
-  &:hover {
+  ${(props) =>
+    props.light &&
+    css`
+      border: 2px solid #cca8e9;
+      color: #7955c3;
+      background: #ffffff;
+      &:hover {
+        background: ${shade(0.1, '#ffffff')};
+      }
+    `}
+
+  ${(props) =>
+    !props.light &&
+    css`
+      color: #ffffff;
+      background: #7955c3;
+      &:hover {
+        background: ${shade(0.2, '#7955c3')};
+      }
+    `}
+
+  /* &:hover {
     background: ${shade(0.2, '#7955C3')};
-  }
+  } */
 `;
