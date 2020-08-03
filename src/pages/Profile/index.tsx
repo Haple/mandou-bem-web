@@ -169,7 +169,7 @@ const Profile: React.FC = () => {
               name="old_password"
               icon={FiLock}
               type="password"
-              placeholder="Senha Atual"
+              placeholder="Senha atual"
             />
 
             <Input
@@ -183,7 +183,7 @@ const Profile: React.FC = () => {
               name="password_confirmation"
               icon={FiLock}
               type="password"
-              placeholder="Senha Atual"
+              placeholder="Confirmar senha"
             />
 
             <Button type="submit">Confirmar Mudanças</Button>
