@@ -108,7 +108,8 @@ describe('Auth hook', () => {
       id: 'user-id',
       name: 'John Doe',
       email: 'johndoe@example.com',
-      avatar_url: 'image-test.jpg',
+      avatar: 'image-test.jpg',
+      is_admin: false,
     };
 
     act(() => {

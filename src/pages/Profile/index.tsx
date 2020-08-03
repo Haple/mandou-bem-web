@@ -1,21 +1,21 @@
 import React, { useCallback, useRef, ChangeEvent } from 'react';
-import { FiMail, FiUser, FiLock, FiCamera, FiArrowLeft } from 'react-icons/fi';
+import { FiMail, FiUser, FiLock, FiCamera } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
+import defaultAvatar from '~/assets/default-avatar.png';
 import api from '~/services/api';
-
 import { useToast } from '~/hooks/toast';
-
+import { useAuth } from '~/hooks/auth';
 import getValidationErrors from '~/utils/getValidationErrors';
 
 import Input from '~/components/Input';
 import Button from '~/components/Button';
+import Header from '~/components/Header';
 
-import { Container, Content, AvatarInput } from './styles';
-import { useAuth } from '~/hooks/auth';
+import { Container, Content, AvatarInput, LogoutButton } from './styles';
 
 interface ProfileFormData {
   name: string;
@@ -30,7 +30,7 @@ const Profile: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, signOut } = useAuth();
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
@@ -123,7 +123,7 @@ const Profile: React.FC = () => {
 
         data.append('avatar', e.target.files[0]);
 
-        api.patch('/users/avatar', data).then((response) => {
+        api.patch('/profile/avatar', data).then((response) => {
           updateUser(response.data);
 
           addToast({
@@ -137,64 +137,63 @@ const Profile: React.FC = () => {
   );
 
   return (
-    <Container>
-      <header>
-        <div>
-          <Link to="/dashboard">
-            <FiArrowLeft />
-          </Link>
-        </div>
-      </header>
+    <>
+      <Header />
+      <Container>
+        <Content>
+          <Form
+            ref={formRef}
+            initialData={{
+              name: user.name,
+              email: user.email,
+            }}
+            onSubmit={handleSubmit}
+          >
+            <AvatarInput>
+              <img
+                src={user.avatar ? user.avatar : defaultAvatar}
+                alt={user.name}
+              />
+              <label htmlFor="avatar">
+                <FiCamera />
 
-      <Content>
-        <Form
-          ref={formRef}
-          initialData={{
-            name: user.name,
-            email: user.email,
-          }}
-          onSubmit={handleSubmit}
-        >
-          <AvatarInput>
-            <img src={user.avatar_url} alt={user.name} />
-            <label htmlFor="avatar">
-              <FiCamera />
+                <input type="file" id="avatar" onChange={handleAvatarChange} />
+              </label>
+            </AvatarInput>
 
-              <input type="file" id="avatar" onChange={handleAvatarChange} />
-            </label>
-          </AvatarInput>
+            <Input name="name" icon={FiUser} placeholder="Nome" />
+            <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-          <h1>Meu Perfil</h1>
+            <Input
+              containerStyle={{ marginTop: 24 }}
+              name="old_password"
+              icon={FiLock}
+              type="password"
+              placeholder="Senha Atual"
+            />
 
-          <Input name="name" icon={FiUser} placeholder="Nome" />
-          <Input name="email" icon={FiMail} placeholder="E-mail" />
+            <Input
+              name="password"
+              icon={FiLock}
+              type="password"
+              placeholder="Nova senha"
+            />
 
-          <Input
-            containerStyle={{ marginTop: 24 }}
-            name="old_password"
-            icon={FiLock}
-            type="password"
-            placeholder="Senha Atual"
-          />
+            <Input
+              name="password_confirmation"
+              icon={FiLock}
+              type="password"
+              placeholder="Senha Atual"
+            />
 
-          <Input
-            name="password"
-            icon={FiLock}
-            type="password"
-            placeholder="Nova senha"
-          />
-
-          <Input
-            name="password_confirmation"
-            icon={FiLock}
-            type="password"
-            placeholder="Senha Atual"
-          />
-
-          <Button type="submit">Confirmar Mudanças</Button>
-        </Form>
-      </Content>
-    </Container>
+            <Button type="submit">Confirmar Mudanças</Button>
+            <LogoutButton type="button" onClick={signOut}>
+              Deslogar
+            </LogoutButton>
+          </Form>
+        </Content>
+      </Container>
+    </>
   );
 };
 
