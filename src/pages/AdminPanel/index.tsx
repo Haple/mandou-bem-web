@@ -19,7 +19,9 @@ const AdminPanel: React.FC = () => {
         <Content>
           <Option>
             <img src={people} alt="Ilustração de uma mulher e um homem" />
-            <Button light>Colaboradores</Button>
+            <Button light onClick={() => history.push('/admin-panel/users')}>
+              Colaboradores
+            </Button>
           </Option>
           <Option>
             <img

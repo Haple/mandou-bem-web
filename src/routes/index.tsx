@@ -14,6 +14,7 @@ import Profile from '../pages/Profile';
 
 import AdminPanel from '../pages/AdminPanel';
 import AdminCatalog from '../pages/AdminCatalog';
+import AdminUsers from '~/pages/AdminUsers';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -34,6 +35,12 @@ const Routes: React.FC = () => (
     <Route
       path="/admin-panel/catalog"
       component={AdminCatalog}
+      isPrivate
+      isAdminOnly
+    />
+    <Route
+      path="/admin-panel/users"
+      component={AdminUsers}
       isPrivate
       isAdminOnly
     />

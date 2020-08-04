@@ -15,7 +15,7 @@
 `yarn start`
 
 
-#  Requisitos Módulo 1
+# [OK] Requisitos Módulo 1
 ## [OK] Criar conta
 
 **RF**
@@ -47,7 +47,7 @@
 ![image info](./github/images/2-login.png)
 
 
-##  Manter usuários
+## [OK] Manter usuários
 
 **RF**
 
