@@ -132,7 +132,7 @@
 ![image info](./github/images/10-admin-editar-catalogo-2.png)
 
 
-##  Resgate de prêmio
+## [OK] Resgate de prêmio
 
 **RF**
 

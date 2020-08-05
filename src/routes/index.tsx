@@ -15,6 +15,7 @@ import Profile from '../pages/Profile';
 import AdminPanel from '../pages/AdminPanel';
 import AdminCatalog from '../pages/AdminCatalog';
 import AdminUsers from '~/pages/AdminUsers';
+import Catalog from '~/pages/Catalog';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -25,6 +26,7 @@ const Routes: React.FC = () => (
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
+    <Route path="/catalog" component={Catalog} isPrivate />
     <Route
       exact
       path="/admin-panel"

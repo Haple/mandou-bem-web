@@ -3,6 +3,7 @@ import { shade } from 'polished';
 
 interface ContainerProps {
   light?: boolean;
+  disabled?: boolean;
 }
 
 export const Container = styled.button<ContainerProps>`
@@ -37,6 +38,16 @@ export const Container = styled.button<ContainerProps>`
         background: ${shade(0.2, '#7955c3')};
       }
     `}
+
+    ${(props) =>
+      props.disabled &&
+      css`
+        cursor: not-allowed;
+        opacity: 0.6;
+        &:hover {
+          background: #ffffff;
+        }
+      `}
 
   svg {
     margin-right: 10px;
