@@ -114,7 +114,7 @@
 
 
 
-#  Requisitos Módulo 2
+# [OK] Requisitos Módulo 2
 
 ## [OK] Catálogo de prêmios
 
@@ -146,7 +146,7 @@
 
 ![image info](./github/images/6-catalogo.png)
 
-##  Entrega de prêmio
+## [OK] Entrega de prêmio
 
 **RF**
 

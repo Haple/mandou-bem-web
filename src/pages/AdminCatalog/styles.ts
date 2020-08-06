@@ -10,14 +10,6 @@ export const Container = styled.div`
     margin-top: 20px;
     color: #788896;
   }
-
-  form {
-    h1 {
-      font-size: 16px;
-      color: #293845;
-      font-weight: bold;
-    }
-  }
 `;
 
 export const Content = styled.div`
@@ -48,21 +40,8 @@ export const CatalogReward = styled.div`
 
   img {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    /* border: 4px solid #c5ced6; */
     margin: 10px 0px;
     max-height: 130px;
-  }
-
-  div {
-    margin: 0;
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-
-    button:not(:first-of-type) {
-      margin-left: 10px;
-    }
   }
 `;
 

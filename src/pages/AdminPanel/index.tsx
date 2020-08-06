@@ -37,7 +37,12 @@ const AdminPanel: React.FC = () => {
               src={acceptRequest}
               alt="Ilustração de uma mulher analisando solicitações"
             />
-            <Button light>Prêmios resgatados</Button>
+            <Button
+              light
+              onClick={() => history.push('/admin-panel/reward-requests')}
+            >
+              Prêmios resgatados
+            </Button>
           </Option>
         </Content>
       </Container>
