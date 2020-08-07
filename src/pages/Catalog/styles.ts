@@ -62,9 +62,5 @@ export const CatalogReward = styled.div`
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
-
-    button:not(:first-of-type) {
-      margin-left: 10px;
-    }
   }
 `;

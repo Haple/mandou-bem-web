@@ -43,6 +43,17 @@ export const CatalogReward = styled.div`
     margin: 10px 0px;
     max-height: 130px;
   }
+
+  div {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    button:not(:first-of-type) {
+      margin-left: 10px;
+    }
+  }
 `;
 
 export const AddCatalogReward = styled.button`

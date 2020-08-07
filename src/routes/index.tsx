@@ -17,6 +17,7 @@ import AdminCatalog from '../pages/AdminCatalog';
 import AdminUsers from '~/pages/AdminUsers';
 import Catalog from '~/pages/Catalog';
 import AdminRewardRequests from '~/pages/AdminRewardRequests';
+import Feed from '~/pages/Feed';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -26,6 +27,8 @@ const Routes: React.FC = () => (
     <Route path="/reset-password" component={ResetPassword} />
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
+
+    <Route path="/feed" component={Feed} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
     <Route path="/catalog" component={Catalog} isPrivate />
     <Route
