@@ -18,7 +18,7 @@ const Header: React.FC = () => {
           <StyledLink to="/feed">Feed</StyledLink>
           <StyledLink to="/profile">Meu Perfil</StyledLink>
           <StyledLink to="/catalog">Catálogo</StyledLink>
-          {user.is_admin && (
+          {user?.is_admin && (
             <StyledLink to="/admin-panel">Painel administrativo</StyledLink>
           )}
         </nav>

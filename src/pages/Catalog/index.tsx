@@ -63,7 +63,7 @@ const Catalog: React.FC = () => {
         });
       }
     },
-    [addToast],
+    [addToast, loadUserData],
   );
 
   return (
