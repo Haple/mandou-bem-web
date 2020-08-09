@@ -1748,6 +1748,13 @@
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.0.0.tgz#165aae4819ad2174a17476dbe66feebd549556c0"
   integrity sha512-xSQfNcvOiE5f9dyd4Kzxbof1aTrLobL278pGLKOZI6esGfZ7ts9Ka16CzIN6Y8hFHE1C7jIBZokULhK1bOgjRw==
 
+"@types/webscopeio__react-textarea-autocomplete@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@types/webscopeio__react-textarea-autocomplete/-/webscopeio__react-textarea-autocomplete-4.6.1.tgz#66211b362f9eabc73f8541261f91134765e87a6c"
+  integrity sha512-rdiDMsTbyFJRbC2BYKIgiAFG/SFkaDGYQYfzo3U2T+EjMCE0JZ8IHZ9nZrJ2Tm83Blrj66cnaEc0H3iwwRqQMA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/yargs-parser@*":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz#cb3f9f741869e20cce330ffbeb9271590483882d"
@@ -2032,6 +2039,14 @@
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
+
+"@webscopeio/react-textarea-autocomplete@^4.7.1":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@webscopeio/react-textarea-autocomplete/-/react-textarea-autocomplete-4.7.1.tgz#eeeb41889ef274bd42a5cf8eff0c82256a299a5e"
+  integrity sha512-nHMhDMX16v/1i4oMVCrK0X68VZAhlgM1TzFfMc2KhEIs1A63GqTOwPocDfYNXz2NFvGLe79ECx0Gt4eiecWd/Q==
+  dependencies:
+    custom-event "^1.0.1"
+    textarea-caret "3.0.2"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -3752,6 +3767,11 @@ csstype@^2.2.0:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.11.tgz#452f4d024149ecf260a852b025e36562a253ffc5"
   integrity sha512-l8YyEC9NBkSm783PFTvh0FmJy7s5pFKrDp49ZL7zBGX3fWkO+N4EEyan1qqp8cwPLDcD0OSdyY6hAMoxp34JFw==
+
+custom-event@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/custom-event/-/custom-event-1.0.1.tgz#5d02a46850adf1b4a317946a3928fccb5bfd0425"
+  integrity sha1-XQKkaFCt8bSjF5RqOSj8y1v9BCU=
 
 customize-cra@^1.0.0:
   version "1.0.0"
@@ -10621,6 +10641,11 @@ text-table@0.2.0, text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+
+textarea-caret@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/textarea-caret/-/textarea-caret-3.0.2.tgz#f360c48699aa1abf718680a43a31a850665c2caf"
+  integrity sha1-82DEhpmqGr9xhoCkOjGoUGZcLK8=
 
 throat@^4.0.0:
   version "4.1.0"
