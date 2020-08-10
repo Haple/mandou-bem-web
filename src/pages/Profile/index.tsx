@@ -89,7 +89,7 @@ const Profile: React.FC = () => {
 
         updateUser(response.data);
 
-        history.push('/dashboard');
+        history.push('/feed');
 
         addToast({
           type: 'success',

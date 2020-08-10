@@ -22,7 +22,6 @@ import {
 } from './styles';
 import api from '~/services/api';
 import Button from '~/components/Button';
-import Input from '~/components/Input';
 
 interface IUserData {
   recognition_points: number;
@@ -39,16 +38,15 @@ interface IUserSearchResult {
   username: string;
 }
 
-const UserListItem = ({ entity }: { entity: IUserSearchResult }) => (
+const UserItemTemplate = ({ entity }: { entity: IUserSearchResult }) => (
   <UserItem>
-    <div>
-      <img
-        src={entity.avatar ? entity.avatar : defaultAvatar}
-        alt={entity.username}
-      />
-      <br />
-      <span>{entity.name}</span>
-    </div>
+    <img
+      src={entity.avatar ? entity.avatar : defaultAvatar}
+      alt={entity.username}
+    />
+    <span>
+      <b>{entity.name}</b> (@{entity.username})
+    </span>
   </UserItem>
 );
 
@@ -123,7 +121,7 @@ const Feed: React.FC = () => {
                       dataProvider: (token) => {
                         return searchUsersByUsername(token);
                       },
-                      component: UserListItem,
+                      component: UserItemTemplate,
                       output: (item, trigger) => `@${item.username}`,
                       allowWhitespace: false,
                       afterWhitespace: true,

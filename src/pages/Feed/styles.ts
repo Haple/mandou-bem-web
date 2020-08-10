@@ -108,18 +108,19 @@ export const CatalogCallToAction = styled.div`
   }
 `;
 
-export const UserItem = styled.div`
+export const UserItem = styled.li`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
   color: #293845;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
-  div {
-    display: flex;
-    flex-direction: row;
-  }
 
   img {
     border-radius: 50%;
-    margin-right: 10px;
+    margin: 5px 10px;
     height: 35px;
   }
 `;
