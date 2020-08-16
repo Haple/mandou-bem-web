@@ -161,7 +161,7 @@
 
 #  Requisitos Módulo 3
 
-## Postagens de reconhecimento
+## [OK] Postagens de reconhecimento
 
 **RF**
 

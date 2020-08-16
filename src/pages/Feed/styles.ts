@@ -34,7 +34,71 @@ export const Content = styled.div`
 `;
 
 export const PostsList = styled.div``;
-export const Post = styled.div``;
+export const Post = styled.div`
+  border: 2px solid #c5ced6;
+  background: #fff;
+  margin: 30px 0;
+  padding: 20px;
+
+  color: #293845;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+
+  div:nth-child(1) {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    strong {
+      margin: 0 10px;
+      font-weight: bold;
+      font-size: 20px;
+      color: #44aea0;
+    }
+
+    img {
+      border-radius: 50%;
+      height: 45px;
+    }
+  }
+
+  div:nth-child(2) {
+    li {
+      list-style: none;
+
+      hr {
+        border: 0;
+        border-top: 1px solid #ccc;
+        margin: 10px 0;
+      }
+    }
+  }
+
+  div:nth-child(3) {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    textarea {
+      /* max-width: 100%;
+     */
+      width: 100%;
+      border: 2px solid #c5ced6;
+
+      border-radius: 5px;
+      padding: 10px;
+      color: #293845;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+    }
+    button {
+      margin: 5px 0px 5px 10px;
+      width: auto;
+    }
+  }
+`;
+
 export const NewPost = styled.div`
   display: flex;
   flex-direction: column;
@@ -65,7 +129,7 @@ export const NewPost = styled.div`
     padding: 10px;
     color: #293845;
     font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
   }
   form {
     div {
@@ -74,8 +138,9 @@ export const NewPost = styled.div`
       align-items: flex-end;
     }
     button {
-      /* width: 150px;
-      height: 50px; */
+      /* width: auto; */
+      font-size: 16px;
+      /* border: none; */
     }
   }
 `;

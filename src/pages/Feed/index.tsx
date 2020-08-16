@@ -45,14 +45,14 @@ interface IUserSearchResult {
   username: string;
 }
 
+interface IComment {
+  user_id: string;
+  user_name: string;
+  content: string;
+}
+
 interface IRecognitionPost {
-  comments: [
-    {
-      user_id: string;
-      user_name: string;
-      content: string;
-    },
-  ];
+  comments: IComment[];
   id: string;
   from_user_id: string;
   to_user_id: string;
@@ -63,6 +63,7 @@ interface IRecognitionPost {
   content: string;
   recognition_points: number;
   created_at: string;
+  new_comment_textarea?: string;
 }
 
 const Feed: React.FC = () => {
@@ -112,7 +113,7 @@ const Feed: React.FC = () => {
     loadRecognitionPosts();
   }, [loadRecognitionPosts, loadRemainingPointsToSend, loadUserData]);
 
-  const handleSubmit = useCallback(async () => {
+  const handleSendRecognitionPost = useCallback(async () => {
     if (!selectedPoints) {
       addToast({
         type: 'error',
@@ -174,6 +175,42 @@ const Feed: React.FC = () => {
     selectedUserResult,
   ]);
 
+  const handleSendPostComment = useCallback(
+    async (post_id: string, comment: string | undefined) => {
+      if (!comment) return;
+      try {
+        const response = await api.post<IRecognitionPost>(
+          `/recognition-posts/${post_id}/comments`,
+          {
+            content: comment,
+          },
+        );
+        addToast({
+          type: 'success',
+          title: 'Comentário criado com sucesso',
+        });
+        setRecognitionPosts(
+          recognitionPosts.map((p) =>
+            p.id === post_id
+              ? {
+                  ...response.data,
+                  new_comment_textarea: '',
+                }
+              : p,
+          ),
+        );
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao criar comentário',
+          description:
+            'Ocorreu um erro ao criar o comentário, tente novamente.',
+        });
+      }
+    },
+    [addToast, recognitionPosts],
+  );
+
   const detectMention = useCallback(
     async (post_content: string) => {
       const mention = post_content.match(/\B@([\w-]+)/) || [];
@@ -211,6 +248,22 @@ const Feed: React.FC = () => {
       detectPoints(e.target.value);
     },
     [detectMention, detectPoints],
+  );
+
+  const handleCommentTextareaChange = useCallback(
+    (comment_content, post) => {
+      setRecognitionPosts(
+        recognitionPosts.map((p) =>
+          p.id === post.id
+            ? {
+                ...p,
+                new_comment_textarea: comment_content,
+              }
+            : p,
+        ),
+      );
+    },
+    [recognitionPosts],
   );
 
   const searchUsersByUsername = useCallback(async (username: string) => {
@@ -278,13 +331,13 @@ const Feed: React.FC = () => {
               </Button>
             </div>
 
-            <Form ref={formRef} onSubmit={handleSubmit}>
+            <Form ref={formRef} onSubmit={handleSendRecognitionPost}>
               <div>
                 <ReactTextareaAutocomplete
                   ref={postRef}
                   name="new_post_content"
                   cols={70}
-                  rows={10}
+                  rows={6}
                   placeholder="Que tal reconhecer aquela pessoa bacana que trabalha com você?"
                   onChange={handlePostContentChange}
                   loadingComponent={() => <span>Carregando...</span>}
@@ -313,39 +366,56 @@ const Feed: React.FC = () => {
           <PostsList>
             {recognitionPosts &&
               recognitionPosts.map((post) => (
-                <Post>
+                <Post key={post.id}>
                   <div>
                     <img
                       src={post.from_avatar ? post.from_avatar : defaultAvatar}
                       alt={post.from_name}
+                      title={post.from_name}
                     />
-                    <span>{`+${post.recognition_points}`}</span>
+                    <strong>{`+${post.recognition_points}`}</strong>
                     <img
                       src={post.to_avatar ? post.to_avatar : defaultAvatar}
                       alt={post.to_name}
+                      title={post.to_name}
                     />
                   </div>
                   <div>
                     <b>{`${post.from_name}: `}</b>
                     <span>{post.content}</span>
-                    {post.comments &&
-                      post.comments.map((comment) => (
-                        <>
-                          <hr />
-                          <b>{`@${comment.user_name}: `}</b>
-                          <span>{comment.content}</span>
-                        </>
-                      ))}
+                    <ul>
+                      {post.comments &&
+                        post.comments.map((comment) => (
+                          <li key={post.id + Math.random() * 100}>
+                            <hr />
+                            <b>{`@${comment.user_name}: `}</b>
+                            <span>{comment.content}</span>
+                          </li>
+                        ))}
+                    </ul>
                   </div>
                   <div>
                     <textarea
+                      id={post.id}
                       name="new_comment_textarea"
                       cols={70}
-                      rows={2}
+                      rows={1}
                       placeholder="Faça um comentário"
+                      value={post.new_comment_textarea}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        handleCommentTextareaChange(e.target.value, post);
+                      }}
                     />
-                    <Button light type="submit">
-                      <FiSend />
+                    <Button
+                      light
+                      type="submit"
+                      onClick={() => {
+                        handleSendPostComment(
+                          post.id,
+                          post.new_comment_textarea,
+                        );
+                      }}
+                    >
                       Comentar
                     </Button>
                   </div>
