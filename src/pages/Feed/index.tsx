@@ -58,6 +58,8 @@ interface IRecognitionPost {
   to_user_id: string;
   from_name: string;
   to_name: string;
+  from_avatar: string;
+  to_avatar: string;
   content: string;
   recognition_points: number;
   created_at: string;
@@ -76,10 +78,12 @@ const Feed: React.FC = () => {
   ] = useState<IUserSearchResult | null>(null);
   const [selectedPoints, setSelectedPoints] = useState<number | null>(null);
   const [postContent, setPostContent] = useState<string>('');
-
   const [userSearchResults, setUserSearchResults] = useState<
     IUserSearchResult[]
   >([]);
+  const [recognitionPosts, setRecognitionPosts] = useState<IRecognitionPost[]>(
+    [],
+  );
 
   const [profileData, setProfileData] = useState<IProfileData | null>(null);
   const [remainingPointsToSend, setRemainingPointsToSend] = useState<
@@ -96,10 +100,17 @@ const Feed: React.FC = () => {
     setRemainingPointsToSend(response.data);
   }, []);
 
+  const loadRecognitionPosts = useCallback(async () => {
+    const response = await api.get<IRecognitionPost[]>('/recognition-posts');
+    setRecognitionPosts(response.data);
+    return response.data;
+  }, []);
+
   useEffect(() => {
     loadUserData();
     loadRemainingPointsToSend();
-  }, [loadRemainingPointsToSend, loadUserData]);
+    loadRecognitionPosts();
+  }, [loadRecognitionPosts, loadRemainingPointsToSend, loadUserData]);
 
   const handleSubmit = useCallback(async () => {
     if (!selectedPoints) {
@@ -114,6 +125,14 @@ const Feed: React.FC = () => {
       addToast({
         type: 'error',
         title: '+Pontos precisa ser positivo',
+      });
+      return;
+    }
+
+    if (selectedPoints > remainingPointsToSend.remaining_points) {
+      addToast({
+        type: 'error',
+        title: '+Pontos insuficientes',
       });
       return;
     }
@@ -136,7 +155,7 @@ const Feed: React.FC = () => {
         type: 'success',
         title: 'Postagem criada com sucesso',
       });
-      await loadRemainingPointsToSend();
+      Promise.all([loadRemainingPointsToSend(), loadRecognitionPosts()]);
       setPostContent('');
     } catch (err) {
       addToast({
@@ -147,8 +166,10 @@ const Feed: React.FC = () => {
     }
   }, [
     addToast,
+    loadRecognitionPosts,
     loadRemainingPointsToSend,
     postContent,
+    remainingPointsToSend.remaining_points,
     selectedPoints,
     selectedUserResult,
   ]);
@@ -288,6 +309,49 @@ const Feed: React.FC = () => {
               </div>
             </Form>
           </NewPost>
+
+          <PostsList>
+            {recognitionPosts &&
+              recognitionPosts.map((post) => (
+                <Post>
+                  <div>
+                    <img
+                      src={post.from_avatar ? post.from_avatar : defaultAvatar}
+                      alt={post.from_name}
+                    />
+                    <span>{`+${post.recognition_points}`}</span>
+                    <img
+                      src={post.to_avatar ? post.to_avatar : defaultAvatar}
+                      alt={post.to_name}
+                    />
+                  </div>
+                  <div>
+                    <b>{`${post.from_name}: `}</b>
+                    <span>{post.content}</span>
+                    {post.comments &&
+                      post.comments.map((comment) => (
+                        <>
+                          <hr />
+                          <b>{`@${comment.user_name}: `}</b>
+                          <span>{comment.content}</span>
+                        </>
+                      ))}
+                  </div>
+                  <div>
+                    <textarea
+                      name="new_comment_textarea"
+                      cols={70}
+                      rows={2}
+                      placeholder="Faça um comentário"
+                    />
+                    <Button light type="submit">
+                      <FiSend />
+                      Comentar
+                    </Button>
+                  </div>
+                </Post>
+              ))}
+          </PostsList>
         </Content>
         <aside>
           <CatalogCallToAction>
