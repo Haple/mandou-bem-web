@@ -47,7 +47,7 @@ export const NewPost = styled.div`
     flex-direction: row;
     margin-bottom: 5px;
     button {
-      border: 2px solid #c5ced6;
+      /* border: 2px solid #c5ced6; */
       font-weight: normal;
       margin-top: 0;
       margin-right: 5px;
@@ -60,7 +60,7 @@ export const NewPost = styled.div`
     min-height: 100px;
     min-width: 100%;
     max-width: 100%;
-    border: 2px solid #c5ced6;
+    border: 2px solid #cca8e9;
     border-radius: 5px;
     padding: 10px;
     color: #293845;
@@ -108,7 +108,7 @@ export const CatalogCallToAction = styled.div`
   }
 `;
 
-export const UserItem = styled.li`
+export const UserItem = styled.span`
   width: 100%;
   display: flex;
   flex-direction: row;

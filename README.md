@@ -165,10 +165,10 @@
 
 **RF**
 
-- Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido ao pressionar a tecla "espaço";
-- O usuário deve poder criar uma postagem de reconhecimento para um colega;
-- Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
-- O usuário deve poder criar um comentário em uma postagem de reconhecimento;
+- [OK] Ao digitar o símbolo "@" deve aparecer um *autocomplete* com os colaboradores da empresa que deve ser interrompido ao pressionar a tecla "espaço";
+- [OK] O usuário deve poder criar uma postagem de reconhecimento para um colega;
+- [OK] Para criar a postagem o usuário precisa informar o colaborador, a quantidade de pontos e uma mensagem;
+- [OK] O usuário deve poder criar um comentário em uma postagem de reconhecimento;
 - (Pouco prioritário) O usuário deve ser capaz de enviar imagens e gifs na postagem;
 
 **RNF**
@@ -198,7 +198,7 @@
 ![image info](./github/images/5-feed.png)
 
 
-## Pontos restantes para enviar
+## [OK] Pontos restantes para enviar
 
 **RF**
 
@@ -218,8 +218,4 @@ todo mês o usuário terá 100 pontos disponíveis para serem enviados para seus
 
 # Próximos passos
 
-- Experimentar outras organizações de pastas
-- Melhorar testes unitários e colocar coisas repetidas no "before"
-- Adicionar testes de integração
-- Adicionar paginação da listagem dos posts de reconhecimento
-- Fazer deploy da aplicação (Heroku ou algum provedor de kubernetes?)
+- Deploy no Netlify
