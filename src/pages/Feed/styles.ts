@@ -144,7 +144,53 @@ export const NewPost = styled.div`
     }
   }
 `;
-export const Ranking = styled.div``;
+export const Ranking = styled.div`
+  margin-top: 30px;
+  border: 2px solid #c5ced6;
+  background: #fff;
+  color: #3b4955;
+  padding-top: 25px;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  img {
+    border-radius: 50%;
+    height: 45px;
+  }
+
+  ul {
+    margin-top: 20px;
+  }
+
+  li {
+    border-top: 2px solid #c3cfd9;
+    border-bottom: 1px solid #c3cfd9;
+    background: #f7f9fa;
+    padding: 5px 15px;
+    margin: 0;
+
+    color: #293845;
+    text-align: center;
+    list-style: none;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    span {
+      margin-left: 10px;
+    }
+  }
+`;
 
 export const CatalogCallToAction = styled.div`
   border: 2px solid #c5ced6;

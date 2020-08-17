@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useRef,
-  useState,
-  useEffect,
-  TextareaHTMLAttributes,
-} from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import { Form } from '@unform/web';
@@ -29,6 +23,7 @@ import {
 import { useToast } from '~/hooks/toast';
 import api from '~/services/api';
 import Button from '~/components/Button';
+import { useAuth } from '~/hooks/auth';
 
 interface IProfileData {
   recognition_points: number;
@@ -66,7 +61,17 @@ interface IRecognitionPost {
   new_comment_textarea?: string;
 }
 
+interface IRecognitionRankingItem {
+  _id: {
+    to_user_id: string;
+  };
+  to_name: string;
+  to_avatar: string;
+  recognition_points: number;
+}
+
 const Feed: React.FC = () => {
+  const { user } = useAuth();
   const { addToast } = useToast();
 
   const history = useHistory();
@@ -85,6 +90,9 @@ const Feed: React.FC = () => {
   const [recognitionPosts, setRecognitionPosts] = useState<IRecognitionPost[]>(
     [],
   );
+  const [recognitionRankingItems, setRecognitionRankingItems] = useState<
+    IRecognitionRankingItem[]
+  >([]);
 
   const [profileData, setProfileData] = useState<IProfileData | null>(null);
   const [remainingPointsToSend, setRemainingPointsToSend] = useState<
@@ -104,14 +112,26 @@ const Feed: React.FC = () => {
   const loadRecognitionPosts = useCallback(async () => {
     const response = await api.get<IRecognitionPost[]>('/recognition-posts');
     setRecognitionPosts(response.data);
-    return response.data;
+  }, []);
+
+  const loadRecognitionRanking = useCallback(async () => {
+    const response = await api.get<IRecognitionRankingItem[]>(
+      '/recognition-ranking',
+    );
+    setRecognitionRankingItems(response.data);
   }, []);
 
   useEffect(() => {
     loadUserData();
     loadRemainingPointsToSend();
     loadRecognitionPosts();
-  }, [loadRecognitionPosts, loadRemainingPointsToSend, loadUserData]);
+    loadRecognitionRanking();
+  }, [
+    loadRecognitionPosts,
+    loadRecognitionRanking,
+    loadRemainingPointsToSend,
+    loadUserData,
+  ]);
 
   const handleSendRecognitionPost = useCallback(async () => {
     if (!selectedPoints) {
@@ -156,7 +176,11 @@ const Feed: React.FC = () => {
         type: 'success',
         title: 'Postagem criada com sucesso',
       });
-      Promise.all([loadRemainingPointsToSend(), loadRecognitionPosts()]);
+      Promise.all([
+        loadRemainingPointsToSend(),
+        loadRecognitionPosts(),
+        loadRecognitionRanking(),
+      ]);
       setPostContent('');
     } catch (err) {
       addToast({
@@ -168,6 +192,7 @@ const Feed: React.FC = () => {
   }, [
     addToast,
     loadRecognitionPosts,
+    loadRecognitionRanking,
     loadRemainingPointsToSend,
     postContent,
     remainingPointsToSend.remaining_points,
@@ -433,6 +458,28 @@ const Feed: React.FC = () => {
               Resgatar prêmio
             </Button>
           </CatalogCallToAction>
+          <Ranking>
+            <b>Quem mais mandou bem esse mês</b>
+            <ul>
+              {recognitionRankingItems &&
+                recognitionRankingItems.map((item) => (
+                  <li key={item._id.to_user_id}>
+                    <div>
+                      <img
+                        src={item.to_avatar ? item.to_avatar : defaultAvatar}
+                        alt={item.to_name}
+                      />
+                      <span>
+                        {user.id === item._id.to_user_id
+                          ? `${item.to_name} (você)`
+                          : item.to_name}
+                      </span>
+                    </div>
+                    <div>{item.recognition_points}</div>
+                  </li>
+                ))}
+            </ul>
+          </Ranking>
         </aside>
       </Container>
     </>

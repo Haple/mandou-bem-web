@@ -159,7 +159,7 @@
 
 ![image info](./github/images/13-admin-premios-resgatados.png)
 
-#  Requisitos Módulo 3
+# [OK] Requisitos Módulo 3
 
 ## [OK] Postagens de reconhecimento
 
@@ -185,7 +185,7 @@
 
 ![image info](./github/images/5-feed.png)
 
-## Ranking dos ganhadores de pontos
+## [OK] Ranking dos ganhadores de pontos
 
 **RF**
 
