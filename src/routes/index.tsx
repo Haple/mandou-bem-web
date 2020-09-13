@@ -18,6 +18,7 @@ import AdminUsers from '~/pages/AdminUsers';
 import Catalog from '~/pages/Catalog';
 import AdminRewardRequests from '~/pages/AdminRewardRequests';
 import Feed from '~/pages/Feed';
+import Analytics from '~/pages/Analytics';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -53,6 +54,12 @@ const Routes: React.FC = () => (
     <Route
       path="/admin-panel/reward-requests"
       component={AdminRewardRequests}
+      isPrivate
+      isAdminOnly
+    />
+    <Route
+      path="/admin-panel/analytics"
+      component={Analytics}
       isPrivate
       isAdminOnly
     />
