@@ -285,7 +285,7 @@ const Feed: React.FC = () => {
 
   const detectMention = useCallback(
     async (post_content: string) => {
-      const mention = post_content.match(/\B@([\w-]+)/) || [];
+      const mention = post_content.match(/\B@([\w-.]+)/) || [];
 
       if (mention.length === 0 && selectedUserResult) {
         setSelectedUserResult({} as IUserSearchResult);
