@@ -61,6 +61,11 @@ interface IRecognitionPost {
   new_comment_textarea?: string;
 }
 
+interface IPagination<T> {
+  total: number;
+  result: T[];
+}
+
 interface IRecognitionRankingItem {
   _id: {
     to_user_id: string;
@@ -99,6 +104,8 @@ const Feed: React.FC = () => {
     IRemainingPointsToSend
   >({} as IRemainingPointsToSend);
 
+  const [page, setPage] = useState(0);
+
   const loadUserData = useCallback(async () => {
     const response = await api.get<IProfileData>('/profile');
     setProfileData(response.data);
@@ -110,9 +117,44 @@ const Feed: React.FC = () => {
   }, []);
 
   const loadRecognitionPosts = useCallback(async () => {
-    const response = await api.get<IRecognitionPost[]>('/recognition-posts');
-    setRecognitionPosts(response.data);
+    const response = await api.get<IPagination<IRecognitionPost>>(
+      '/recognition-posts',
+      {
+        params: {
+          page: 0,
+          size: 10,
+        },
+      },
+    );
+    setRecognitionPosts(response.data.result);
+    setPage(0);
   }, []);
+
+  const nextRecognitionPosts = useCallback(
+    async (page: number) => {
+      const response = await api.get<IPagination<IRecognitionPost>>(
+        '/recognition-posts',
+        {
+          params: {
+            page,
+            size: 10,
+          },
+        },
+      );
+      setRecognitionPosts([...recognitionPosts, ...response.data.result]);
+    },
+    [recognitionPosts],
+  );
+
+  const handleScroll = useCallback(async () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+      document.documentElement.offsetHeight
+    )
+      return;
+    nextRecognitionPosts(page + 1);
+    setPage(page + 1);
+  }, [nextRecognitionPosts, page]);
 
   const loadRecognitionRanking = useCallback(async () => {
     const response = await api.get<IRecognitionRankingItem[]>(
@@ -132,6 +174,11 @@ const Feed: React.FC = () => {
     loadRemainingPointsToSend,
     loadUserData,
   ]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   const handleSendRecognitionPost = useCallback(async () => {
     if (!selectedPoints) {
