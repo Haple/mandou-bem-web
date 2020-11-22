@@ -22,6 +22,7 @@ interface IUserData {
   name: string;
   email: string;
   avatar: string;
+  recognition_points: number;
 }
 
 interface INewUser {
@@ -151,7 +152,7 @@ const AdminUsers: React.FC = () => {
                   />
                   <div>
                     <strong>{user.name}</strong>
-                    <span>{user.email}</span>
+                    <span>Pontos: {user.recognition_points}</span>
                   </div>
                 </div>
                 <Button light onClick={() => handleDeleteUser(user.id)}>

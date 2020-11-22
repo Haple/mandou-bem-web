@@ -44,6 +44,7 @@ export const UserCard = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    width: 100%;
 
     img {
       border-radius: 50%;
@@ -54,6 +55,7 @@ export const UserCard = styled.div`
     > div {
       display: flex;
       flex-direction: column;
+      width: 100%;
       font-size: 16px;
       color: #293845;
 
