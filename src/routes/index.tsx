@@ -15,6 +15,8 @@ import Profile from '../pages/Profile';
 import AdminPanel from '../pages/AdminPanel';
 import AdminCatalog from '../pages/AdminCatalog';
 import AdminUsers from '~/pages/AdminUsers';
+import AdminPositions from '~/pages/AdminPositions';
+import AdminDepartments from '~/pages/AdminDepartments';
 import Catalog from '~/pages/Catalog';
 import AdminRewardRequests from '~/pages/AdminRewardRequests';
 import Feed from '~/pages/Feed';
@@ -42,6 +44,18 @@ const Routes: React.FC = () => (
     <Route
       path="/admin-panel/catalog"
       component={AdminCatalog}
+      isPrivate
+      isAdminOnly
+    />
+    <Route
+      path="/admin-panel/positions"
+      component={AdminPositions}
+      isPrivate
+      isAdminOnly
+    />
+    <Route
+      path="/admin-panel/departments"
+      component={AdminDepartments}
       isPrivate
       isAdminOnly
     />

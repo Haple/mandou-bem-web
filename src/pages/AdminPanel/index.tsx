@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import Header from '~/components/Header';
 import people from '~/assets/draw-people.svg';
 import gift from '~/assets/draw-gift.svg';
+import connected from '~/assets/draw-connected.svg';
+import connectingTeams from '~/assets/draw-connecting-teams.svg';
 import acceptRequest from '~/assets/draw-accept-request.svg';
 import analytics from '~/assets/draw-data.svg';
 
@@ -18,6 +20,30 @@ const AdminPanel: React.FC = () => {
       <Header />
       <Container>
         <Content>
+          <Option>
+            <img
+              src={connected}
+              alt="Ilustração de três circulos conectados e com pessoas dentro"
+            />
+            <Button
+              light
+              onClick={() => history.push('/admin-panel/positions')}
+            >
+              Cargos
+            </Button>
+          </Option>
+          <Option>
+            <img
+              src={connectingTeams}
+              alt="Ilustração de um homem segurando três engrenagens"
+            />
+            <Button
+              light
+              onClick={() => history.push('/admin-panel/departments')}
+            >
+              Departamentos
+            </Button>
+          </Option>
           <Option>
             <img src={people} alt="Ilustração de uma mulher e um homem" />
             <Button light onClick={() => history.push('/admin-panel/users')}>

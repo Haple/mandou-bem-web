@@ -72,12 +72,12 @@ const SignIn: React.FC = () => {
             Mandou <b>Bem</b>
           </h1>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <Input name="email" icon={FiMail} placeholder="E-mail" />
+            <Input name="email" icon={FiMail} label="E-mail" />
             <Input
               name="password"
               icon={FiLock}
               type="password"
-              placeholder="Senha"
+              label="Senha"
             />
 
             <Button type="submit">Entrar</Button>

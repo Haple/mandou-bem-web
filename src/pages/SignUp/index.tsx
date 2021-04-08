@@ -110,21 +110,21 @@ const SignUp: React.FC = () => {
             <Input
               name="company_name"
               icon={BsBuilding}
-              placeholder="Nome da empresa"
+              label="Nome da empresa"
             />
-            <Input name="name" icon={FiUser} placeholder="Seu nome completo" />
-            <Input name="email" icon={FiMail} placeholder="E-mail" />
+            <Input name="name" icon={FiUser} label="Nome completo" />
+            <Input name="email" icon={FiMail} label="E-mail" />
             <Input
               name="password"
               icon={FiLock}
               type="password"
-              placeholder="Senha"
+              label="Senha"
             />
             <Input
               name="password_confirmation"
               icon={FiLock}
               type="password"
-              placeholder="Confirmação de Senha"
+              label="Confirmação de senha"
             />
 
             <Button type="submit">Cadastrar</Button>

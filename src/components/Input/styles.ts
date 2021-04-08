@@ -11,7 +11,7 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   background: #ffffff;
   border-radius: 5px;
-  padding: 12px;
+  padding: 15px;
   width: 100%;
   transition: border-color 0.2s;
 
@@ -20,7 +20,7 @@ export const Container = styled.div<ContainerProps>`
 
   display: flex;
   align-items: center;
-
+  position: relative;
 
   & + div {
     margin-top: 8px;
@@ -45,8 +45,6 @@ export const Container = styled.div<ContainerProps>`
       color: #7955c3;
     `}
 
-
-
   input {
     flex: 1;
     background: transparent;
@@ -68,6 +66,26 @@ export const Container = styled.div<ContainerProps>`
 
   svg {
     margin-right: 16px;
+  }
+
+  div{
+    position: relative;
+  }
+
+  label {
+    position: absolute;
+    transform: translate(1px, 1px) scale(1);
+    transition: all 150ms ease-in;
+    color: #B0B0B0;
+
+    ${(props) =>
+      (props.isFocused || props.isFilled) &&
+      css`
+        transform: translateY(-15px);
+        /* transform: translate(0, 4px) scale(0.75); */
+        font-size: 0.8em;
+        color: #636161;
+      `}
   }
 `;
 
