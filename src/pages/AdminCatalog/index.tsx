@@ -11,6 +11,7 @@ import { Container, Content, CatalogReward, AddCatalogReward } from './styles';
 import Button from '~/components/Button';
 import api from '~/services/api';
 import Input from '~/components/Input';
+import TextArea from '~/components/TextArea';
 import Modal from '~/components/Modal';
 import getValidationErrors from '~/utils/getValidationErrors';
 import { useToast } from '~/hooks/toast';
@@ -20,12 +21,18 @@ interface ICatalogRewardData {
   title: string;
   points: number;
   image_url: string;
+  units_available: number;
+  expiration_days: number;
+  description: string;
 }
 
 interface INewCatalogReward {
   title: string;
   image_url: string;
   points: number;
+  units_available: number;
+  expiration_days: number;
+  description: string;
 }
 
 const AdminCatalog: React.FC = () => {
@@ -74,6 +81,15 @@ const AdminCatalog: React.FC = () => {
         points: Yup.number()
           .positive('Valor inválido')
           .required('Quantidade de pontos obrigatória'),
+        units_available: Yup.number()
+          .positive('Valor inválido')
+          .required('Unidades disponíveis obrigatória'),
+        expiration_days: Yup.number()
+          .positive('Valor inválido')
+          .required('Quantidade de dias de validade obrigatória'),
+        description: Yup.string().required(
+          'Política de resgate do prêmio obrigatório',
+        ),
       });
 
       await schema.validate(data, {
@@ -97,10 +113,17 @@ const AdminCatalog: React.FC = () => {
           title: data.title,
           image_url: data.image_url,
           points: data.points,
+          units_available: data.units_available,
+          expiration_days: data.expiration_days,
+          description: data.description,
         });
 
         setCatalogRewards([...catalogRewards, response.data]);
         toggleAddModal();
+        addToast({
+          type: 'success',
+          title: 'Prêmio criado com sucesso',
+        });
       } catch (err) {
         addToast({
           type: 'error',
@@ -131,6 +154,9 @@ const AdminCatalog: React.FC = () => {
             title: data.title,
             image_url: data.image_url,
             points: data.points,
+            units_available: data.units_available,
+            expiration_days: data.expiration_days,
+            description: data.description,
           },
         );
 
@@ -139,6 +165,10 @@ const AdminCatalog: React.FC = () => {
         );
         setCatalogRewards(updatedCatalogRewards);
         toggleEditModal();
+        addToast({
+          type: 'success',
+          title: 'Prêmio editado com sucesso',
+        });
       } catch (err) {
         addToast({
           type: 'error',
@@ -162,6 +192,10 @@ const AdminCatalog: React.FC = () => {
         await api.delete<ICatalogRewardData>(`catalog-rewards/${id}`);
         const updatedCatalogRewards = catalogRewards.filter((c) => c.id !== id);
         setCatalogRewards(updatedCatalogRewards);
+        addToast({
+          type: 'success',
+          title: 'Prêmio excluído com sucesso',
+        });
       } catch (err) {
         addToast({
           type: 'error',
@@ -180,14 +214,27 @@ const AdminCatalog: React.FC = () => {
         <Form ref={formRef} onSubmit={handleAddCatalogReward}>
           <h2>Novo Prêmio</h2>
           <br />
-          <Input name="title" placeholder="Dia de folga" />
-          <Input name="image_url" placeholder="https://site.com/imagem.png" />
+          <Input name="title" label="Título" />
+          <Input name="image_url" label="Link da imagem" />
           <Input
             type="number"
             name="points"
-            placeholder="5000"
+            label="Quantidade de pontos"
             defaultValue={0}
           />
+          <Input
+            type="number"
+            name="units_available"
+            label="Unidades disponíveis"
+            defaultValue={0}
+          />
+          <Input
+            type="number"
+            name="expiration_days"
+            label="Quantidade de dias de validade"
+            defaultValue={0}
+          />
+          <TextArea name="description" label="Política de resgate do prêmio" />
 
           <Button type="submit">Salvar</Button>
         </Form>
@@ -200,15 +247,38 @@ const AdminCatalog: React.FC = () => {
         <Form ref={formRef} onSubmit={editCatalogReward}>
           <h2>Editar Prêmio</h2>
           <br />
-          <Input name="title" defaultValue={editingCatalogReward.title} />
+          <Input
+            name="title"
+            label="Título"
+            defaultValue={editingCatalogReward.title}
+          />
           <Input
             name="image_url"
+            label="Link da imagem"
             defaultValue={editingCatalogReward.image_url}
           />
           <Input
             type="number"
             name="points"
+            label="Quantidade de pontos"
             defaultValue={editingCatalogReward.points}
+          />
+          <Input
+            type="number"
+            name="units_available"
+            label="Unidades disponíveis"
+            defaultValue={editingCatalogReward.units_available}
+          />
+          <Input
+            type="number"
+            name="expiration_days"
+            label="Quantidade de dias de validade"
+            defaultValue={editingCatalogReward.expiration_days}
+          />
+          <TextArea
+            name="description"
+            label="Política de resgate do prêmio"
+            defaultValue={editingCatalogReward.description}
           />
 
           <Button type="submit">Salvar</Button>
