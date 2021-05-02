@@ -56,7 +56,7 @@ const AdminCatalog: React.FC = () => {
 
   useEffect(() => {
     async function loadCatalogRewards(): Promise<void> {
-      const response = await api.get<ICatalogRewardData[]>('/catalog-rewards');
+      const response = await api.get<ICatalogRewardData[]>('/custom-rewards');
       setCatalogRewards(response.data);
     }
 
@@ -109,7 +109,7 @@ const AdminCatalog: React.FC = () => {
       try {
         await validateForm(data);
 
-        const response = await api.post<ICatalogRewardData>('catalog-rewards', {
+        const response = await api.post<ICatalogRewardData>('custom-rewards', {
           title: data.title,
           image_url: data.image_url,
           points: data.points,
@@ -149,7 +149,7 @@ const AdminCatalog: React.FC = () => {
         await validateForm(data);
 
         const response = await api.put<ICatalogRewardData>(
-          `catalog-rewards/${editingCatalogReward.id}`,
+          `custom-rewards/${editingCatalogReward.id}`,
           {
             title: data.title,
             image_url: data.image_url,
@@ -189,7 +189,7 @@ const AdminCatalog: React.FC = () => {
   const handleDeleteCatalogReward = useCallback(
     async (id: string) => {
       try {
-        await api.delete<ICatalogRewardData>(`catalog-rewards/${id}`);
+        await api.delete<ICatalogRewardData>(`custom-rewards/${id}`);
         const updatedCatalogRewards = catalogRewards.filter((c) => c.id !== id);
         setCatalogRewards(updatedCatalogRewards);
         addToast({
