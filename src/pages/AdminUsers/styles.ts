@@ -64,6 +64,9 @@ export const UserCard = styled.div`
         padding-bottom: 5px;
       }
     }
+    button:not(:first-of-type) {
+      margin-left: 10px;
+    }
   }
 `;
 
@@ -74,7 +77,7 @@ export const AddUser = styled.button`
   justify-content: center;
 
   background: #fff;
-  border: 2px solid #c5ced6;
+  border: 2px dashed #c5ced6;
 
   width: 300px;
   margin: 5px;

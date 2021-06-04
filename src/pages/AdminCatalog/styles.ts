@@ -63,7 +63,7 @@ export const AddCatalogReward = styled.button`
   justify-content: center;
 
   background: #fff;
-  border: 2px solid #c5ced6;
+  border: 2px dashed #c5ced6;
 
   width: 300px;
   margin: 5px;

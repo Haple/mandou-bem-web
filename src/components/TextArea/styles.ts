@@ -11,7 +11,7 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   background: #ffffff;
   border-radius: 5px;
-  padding: 15px;
+  padding: 15px 10px;
   width: 100%;
   transition: border-color 0.2s;
 
@@ -45,12 +45,21 @@ export const Container = styled.div<ContainerProps>`
       color: #7955c3;
     `}
 
-  input {
+  textarea {
+    margin: 0;
+    width: 100%;
+    min-height: 100px;
+    min-width: 100%;
+    max-width: 100%;
+    /* border: 2px solid #cca8e9; */
+    border-radius: 5px;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+
     flex: 1;
     background: transparent;
     border: 0;
     color: #35434F;
-    width: 100%;
 
     &::placeholder {
       color: #C5CED6;

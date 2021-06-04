@@ -45,8 +45,14 @@ export const Container = styled.div<ContainerProps>`
       color: #7955c3;
     `}
 
-  input {
-    flex: 1;
+  div{
+    position: relative;
+    width: 100%;
+
+    /* display: flex; */
+  }
+
+  select {
     background: transparent;
     border: 0;
     color: #35434F;
@@ -56,22 +62,26 @@ export const Container = styled.div<ContainerProps>`
       color: #C5CED6;
       font-weight: bold;
     }
+
+    option{
+      /* background: #201b2d; */
+      border: 2px solid #C5CED6;
+      padding: 100px 15px;
+      &:active {
+        /* background: #252131; */
+      }
+    }
   }
 
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active  {
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus,
+  select:-webkit-autofill:active  {
       -webkit-box-shadow: 0 0 0 30px white inset !important;
   }
 
   svg {
     margin-right: 16px;
-  }
-
-  div{
-    position: relative;
-    width: 100%;
   }
 
   label {

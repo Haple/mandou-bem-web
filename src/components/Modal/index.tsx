@@ -32,8 +32,9 @@ const Modal: React.FC<IModalProps> = ({ children, isOpen, toggleModal }) => {
           background: '#F7F9FA',
           color: '#000000',
           minWidth: '400px',
+          width: '500px',
           textAlign: 'center',
-          padding: '40px 80px',
+          padding: '20px 40px',
         },
         overlay: {
           backgroundColor: '#121214e6',
