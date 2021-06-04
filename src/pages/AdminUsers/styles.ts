@@ -63,6 +63,11 @@ export const UserCard = styled.div`
         font-weight: bold;
         padding-bottom: 5px;
       }
+      
+      span {
+        overflow-wrap: break-word;
+        inline-size: 150px;
+      }
     }
     button:not(:first-of-type) {
       margin-left: 10px;
