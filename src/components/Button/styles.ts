@@ -50,6 +50,7 @@ export const Container = styled.button<ContainerProps>`
       `}
 
   svg {
+    vertical-align: text-top;
     margin-right: 10px;
   }
 `;
