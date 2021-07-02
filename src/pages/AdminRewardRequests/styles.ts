@@ -6,7 +6,8 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
+  h2,
+  h3 {
     margin: 20px 0;
     color: #788896;
   }
@@ -24,13 +25,7 @@ export const RewardRequest = styled.div`
   margin: 5px;
   padding: 20px;
 
-  button {
-    /* width: 100%; */
-    flex-grow: 0;
-    align-self: right;
-  }
-
-  div {
+  div:nth-of-type(1n) {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -43,15 +38,50 @@ export const RewardRequest = styled.div`
     }
 
     > div {
+      margin: 0;
       display: flex;
       flex-direction: column;
+      width: 100%;
       font-size: 16px;
       color: #293845;
-
-      strong {
+      label {
         font-weight: bold;
-        padding-bottom: 5px;
       }
+    }
+  }
+
+  div:nth-of-type(2n) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+      margin: 10px;
+    }
+  }
+`;
+
+export const ReproveModal = styled.div`
+  div:nth-of-type(1n) {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+
+    span {
+      label {
+        font-weight: bold;
+      }
+    }
+  }
+
+  div:nth-of-type(2n) {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    button:not(:first-of-type) {
+      margin-left: 10px;
     }
   }
 `;

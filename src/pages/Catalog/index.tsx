@@ -54,9 +54,9 @@ const Catalog: React.FC = () => {
   const [giftCardResponse, setGiftCardResponse] = useState<IGiftCardResponse>(
     {} as IGiftCardResponse,
   );
-  const [customRewardResponse, setCustomRewardResponse] = useState<
-    ICustomRewardResponse
-  >({} as ICustomRewardResponse);
+  const [, setCustomRewardResponse] = useState<ICustomRewardResponse>(
+    {} as ICustomRewardResponse,
+  );
   const [modalStatusSelectCatalog, setModalStatusSelectCatalog] = useState(
     false,
   );
