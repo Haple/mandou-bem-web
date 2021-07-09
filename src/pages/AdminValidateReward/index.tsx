@@ -106,7 +106,7 @@ const AdminValidateReward: React.FC = () => {
           type: 'error',
           title: 'Erro ao buscar prêmio customizado',
           description:
-            'Ocorreu um erro ao buscar a o prêmio customizado, tente novamente.',
+            'Ocorreu um erro ao buscar o prêmio customizado, tente novamente.',
         });
       }
     },
