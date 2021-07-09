@@ -7,6 +7,7 @@ import gift from '~/assets/draw-gift.svg';
 import connected from '~/assets/draw-connected.svg';
 import connectingTeams from '~/assets/draw-connecting-teams.svg';
 import acceptRequest from '~/assets/draw-accept-request.svg';
+import giftCard from '~/assets/draw-gift-card.svg';
 import analytics from '~/assets/draw-data.svg';
 
 import { Container, Content, Option } from './styles';
@@ -69,6 +70,18 @@ const AdminPanel: React.FC = () => {
               onClick={() => history.push('/admin-panel/reward-requests')}
             >
               Prêmios resgatados
+            </Button>
+          </Option>
+          <Option>
+            <img
+              src={giftCard}
+              alt="Ilustração de uma mulher com um grande vale-presente"
+            />
+            <Button
+              light
+              onClick={() => history.push('/admin-panel/validate-reward')}
+            >
+              Validar prêmio
             </Button>
           </Option>
           <Option>

@@ -19,6 +19,7 @@ import AdminPositions from '~/pages/AdminPositions';
 import AdminDepartments from '~/pages/AdminDepartments';
 import Catalog from '~/pages/Catalog';
 import AdminRewardRequests from '~/pages/AdminRewardRequests';
+import AdminValidateReward from '~/pages/AdminValidateReward';
 import Feed from '~/pages/Feed';
 import Analytics from '~/pages/Analytics';
 
@@ -68,6 +69,12 @@ const Routes: React.FC = () => (
     <Route
       path="/admin-panel/reward-requests"
       component={AdminRewardRequests}
+      isPrivate
+      isAdminOnly
+    />
+    <Route
+      path="/admin-panel/validate-reward"
+      component={AdminValidateReward}
       isPrivate
       isAdminOnly
     />
