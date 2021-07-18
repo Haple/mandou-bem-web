@@ -29,7 +29,6 @@ const Input: React.FC<InputProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
 
   const { fieldName, defaultValue, error, registerField } = useField(name);
 
@@ -39,8 +38,6 @@ const Input: React.FC<InputProps> = ({
 
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
-
-    setIsFilled(!!inputRef.current?.value);
   }, []);
 
   useEffect(() => {
@@ -49,15 +46,12 @@ const Input: React.FC<InputProps> = ({
       ref: inputRef.current,
       path: 'value',
     });
-    if (inputRef.current?.defaultValue || placeholder) {
-      setIsFilled(true);
-    }
   }, [fieldName, placeholder, registerField]);
   return (
     <Container
       style={containerStyle}
       isErrored={!!error}
-      isFilled={isFilled}
+      isFilled
       isFocused={isFocused}
       data-testid="input-container"
     >
@@ -66,6 +60,7 @@ const Input: React.FC<InputProps> = ({
       <div>
         {label && <label onClick={handleInputFocus}>{label}</label>}
         <input
+          type="date"
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           defaultValue={defaultValue}

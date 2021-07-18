@@ -9,6 +9,7 @@ import connectingTeams from '~/assets/draw-connecting-teams.svg';
 import acceptRequest from '~/assets/draw-accept-request.svg';
 import giftCard from '~/assets/draw-gift-card.svg';
 import analytics from '~/assets/draw-data.svg';
+import survey from '~/assets/draw-survey.svg';
 
 import { Container, Content, Option } from './styles';
 import Button from '~/components/Button';
@@ -82,6 +83,15 @@ const AdminPanel: React.FC = () => {
               onClick={() => history.push('/admin-panel/validate-reward')}
             >
               Validar prêmio
+            </Button>
+          </Option>
+          <Option>
+            <img src={survey} alt="Ilustração de uma prancheta de pesquisas" />
+            <Button
+              light
+              onClick={() => history.push('/admin-panel/enps-surveys')}
+            >
+              Pesquisas E-NPS
             </Button>
           </Option>
           <Option>

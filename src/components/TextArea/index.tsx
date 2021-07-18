@@ -20,6 +20,7 @@ const TextArea: React.FC<InputProps> = ({
   name,
   containerStyle = {},
   label,
+  placeholder,
   ...rest
 }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -36,8 +37,8 @@ const TextArea: React.FC<InputProps> = ({
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
-    setIsFilled(!!textAreaRef.current?.value);
-  }, []);
+    setIsFilled(!!textAreaRef.current?.value || !!placeholder);
+  }, [placeholder]);
 
   useEffect(() => {
     registerField({
@@ -45,10 +46,10 @@ const TextArea: React.FC<InputProps> = ({
       ref: textAreaRef.current,
       path: 'value',
     });
-    if (textAreaRef.current?.defaultValue) {
+    if (textAreaRef.current?.defaultValue || placeholder) {
       setIsFilled(true);
     }
-  }, [fieldName, registerField]);
+  }, [fieldName, placeholder, registerField]);
   return (
     <Container
       style={containerStyle}
@@ -64,6 +65,7 @@ const TextArea: React.FC<InputProps> = ({
           onBlur={handleInputBlur}
           defaultValue={defaultValue}
           ref={textAreaRef}
+          placeholder={placeholder}
           {...rest}
         />
       </div>

@@ -22,6 +22,7 @@ import AdminRewardRequests from '~/pages/AdminRewardRequests';
 import AdminValidateReward from '~/pages/AdminValidateReward';
 import Feed from '~/pages/Feed';
 import Analytics from '~/pages/Analytics';
+import AdminEnpsSurveys from '~/pages/AdminEnpsSurveys';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -75,6 +76,12 @@ const Routes: React.FC = () => (
     <Route
       path="/admin-panel/validate-reward"
       component={AdminValidateReward}
+      isPrivate
+      isAdminOnly
+    />
+    <Route
+      path="/admin-panel/enps-surveys"
+      component={AdminEnpsSurveys}
       isPrivate
       isAdminOnly
     />
