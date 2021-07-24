@@ -153,7 +153,7 @@ const AdminEnpsSurveys: React.FC = () => {
             : undefined,
         };
 
-        setEnpsSurveys([...enpsSurveys, formatted_response]);
+        setEnpsSurveys([formatted_response, ...enpsSurveys]);
         toggleAddModal();
       } catch (err) {
         addToast({
@@ -232,7 +232,8 @@ const AdminEnpsSurveys: React.FC = () => {
                 <EnpsScore score={enpsSurvey.enps_score}>
                   <label>E-NPS</label>
                   <span>
-                    {!enpsSurvey.enps_score && '?'}
+                    {enpsSurvey.enps_score === undefined ||
+                      (enpsSurvey.enps_score === null && '?')}
                     {enpsSurvey.enps_score}
                   </span>
                 </EnpsScore>

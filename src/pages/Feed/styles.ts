@@ -235,3 +235,43 @@ export const UserItem = styled.span`
     height: 35px;
   }
 `;
+
+export const EnpsSurveyModal = styled.div`
+  input[type='radio'] {
+    margin: 5px;
+  }
+
+  .score {
+    width: 100%;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  div:nth-of-type(1n) {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+
+    span {
+      label {
+        font-weight: bold;
+      }
+    }
+  }
+
+  div:nth-of-type(2n) {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    button:not(:first-of-type) {
+      margin-left: 10px;
+    }
+  }
+`;

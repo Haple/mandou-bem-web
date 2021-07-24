@@ -5,9 +5,13 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { FiSend } from 'react-icons/fi';
 import ReactTextareaAutocomplete from '@webscopeio/react-textarea-autocomplete';
+import * as Yup from 'yup';
+import getValidationErrors from '~/utils/getValidationErrors';
 import '@webscopeio/react-textarea-autocomplete/style.css';
 import defaultAvatar from '~/assets/default-avatar.png';
 
+import Radio from '~/components/Radio';
+import TextArea from '~/components/TextArea';
 import Header from '~/components/Header';
 
 import {
@@ -19,11 +23,13 @@ import {
   Ranking,
   UserItem,
   CatalogCallToAction,
+  EnpsSurveyModal,
 } from './styles';
 import { useToast } from '~/hooks/toast';
 import api from '~/services/api';
 import Button from '~/components/Button';
 import { useAuth } from '~/hooks/auth';
+import Modal from '~/components/Modal';
 
 interface IProfileData {
   recognition_points: number;
@@ -75,6 +81,16 @@ interface IRecognitionRankingItem {
   recognition_points: number;
 }
 
+interface IEnpsSurveyAvailable {
+  id: string;
+  question: string;
+}
+
+interface IAnswerEnpsSurvey {
+  answer: string;
+  score: number;
+}
+
 const Feed: React.FC = () => {
   const { user } = useAuth();
   const { addToast } = useToast();
@@ -98,6 +114,14 @@ const Feed: React.FC = () => {
   const [recognitionRankingItems, setRecognitionRankingItems] = useState<
     IRecognitionRankingItem[]
   >([]);
+  const [availableEnpsSurveys, setAvailableEnpsSurveys] = useState<
+    IEnpsSurveyAvailable[]
+  >([]);
+  const [modalStatusEnpsSurvey, setModalStatusEnpsSurvey] = useState(false);
+
+  const toggleEnpsSurveyModal = useCallback(() => {
+    setModalStatusEnpsSurvey(!modalStatusEnpsSurvey);
+  }, [modalStatusEnpsSurvey]);
 
   const [profileData, setProfileData] = useState<IProfileData | null>(null);
   const [remainingPointsToSend, setRemainingPointsToSend] = useState<
@@ -163,12 +187,28 @@ const Feed: React.FC = () => {
     setRecognitionRankingItems(response.data);
   }, []);
 
+  const loadAvailableEnpsSurveys = useCallback(async () => {
+    try {
+      const response = await api.get<IEnpsSurveyAvailable[]>(
+        '/enps-surveys/answers/available',
+      );
+      setAvailableEnpsSurveys(response.data);
+      setModalStatusEnpsSurvey(true);
+    } catch (err) {
+      console.log(`There is no E-NPS Survey available: ${err}`);
+    }
+  }, []);
+
   useEffect(() => {
-    loadUserData();
-    loadRemainingPointsToSend();
-    loadRecognitionPosts();
-    loadRecognitionRanking();
+    Promise.all([
+      loadUserData(),
+      loadRemainingPointsToSend(),
+      loadRecognitionPosts(),
+      loadRecognitionRanking(),
+      loadAvailableEnpsSurveys(),
+    ]);
   }, [
+    loadAvailableEnpsSurveys,
     loadRecognitionPosts,
     loadRecognitionRanking,
     loadRemainingPointsToSend,
@@ -363,9 +403,112 @@ const Feed: React.FC = () => {
     [],
   );
 
+  const validateEnpsAnswerForm = useCallback(
+    async (data: IAnswerEnpsSurvey) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          answer: Yup.string().required('Resposta é obrigatória'),
+          score: Yup.string().required('Nota é obrigatória'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+          throw err;
+        }
+      }
+    },
+    [],
+  );
+
+  const handleAnswerEnpsSurvey = useCallback(
+    async (data: IAnswerEnpsSurvey) => {
+      try {
+        await validateEnpsAnswerForm(data);
+        const { id } = availableEnpsSurveys[0];
+
+        await api.post(`/enps-surveys/${id}/answers`, {
+          answer: data.answer,
+          score: data.score,
+        });
+
+        toggleEnpsSurveyModal();
+        addToast({
+          type: 'success',
+          title: 'Resposta enviada com sucesso :)',
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro na criação da pesquisa ENPS',
+          description:
+            'Ocorreu um erro ao criar a pesquisa ENPS, tente novamente.',
+        });
+      }
+    },
+    [
+      addToast,
+      availableEnpsSurveys,
+      toggleEnpsSurveyModal,
+      validateEnpsAnswerForm,
+    ],
+  );
+
   return (
     <>
       <Header />
+
+      <Modal isOpen={modalStatusEnpsSurvey} toggleModal={toggleEnpsSurveyModal}>
+        <EnpsSurveyModal>
+          <Form ref={formRef} onSubmit={handleAnswerEnpsSurvey}>
+            <h2>Pesquisa E-NPS</h2>
+            <br />
+            <div>
+              <span>{availableEnpsSurveys[0]?.question}</span>
+              <br />
+              <br />
+              <div className="score">
+                <Radio
+                  name="score"
+                  options={[
+                    { id: '0', label: '0' },
+                    { id: '1', label: '1' },
+                    { id: '2', label: '2' },
+                    { id: '3', label: '3' },
+                    { id: '4', label: '4' },
+                    { id: '5', label: '5' },
+                    { id: '6', label: '6' },
+                    { id: '7', label: '7' },
+                    { id: '8', label: '8' },
+                    { id: '9', label: '9' },
+                    { id: '10', label: '10' },
+                  ]}
+                />
+              </div>
+
+              <br />
+              <TextArea
+                name="answer"
+                label="Faça um comentário sobre sua nota"
+              />
+            </div>
+            <div>
+              <Button light onClick={() => toggleEnpsSurveyModal()}>
+                Responder mais tarde
+              </Button>
+              <Button type="submit">Enviar resposta</Button>
+            </div>
+          </Form>
+        </EnpsSurveyModal>
+      </Modal>
+
       <Container>
         <Content>
           <h2>
