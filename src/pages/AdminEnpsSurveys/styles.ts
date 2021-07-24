@@ -36,8 +36,11 @@ export const EnpsScore = styled.div<EnpsScoreProps>`
 
     text-align: center;
     vertical-align: middle;
+    label{
+      font-size: 12px;
+    }
     span{
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
     }
     ${(props) =>

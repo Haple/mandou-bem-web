@@ -6,6 +6,7 @@ import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
 import { format, parseISO } from 'date-fns';
+import { useHistory } from 'react-router-dom';
 import Header from '~/components/Header';
 
 import {
@@ -64,6 +65,7 @@ const AdminEnpsSurveys: React.FC = () => {
   );
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
+  const history = useHistory();
 
   useEffect(() => {
     async function loadEnpsSurveys(): Promise<void> {
@@ -165,12 +167,19 @@ const AdminEnpsSurveys: React.FC = () => {
     [addToast, enpsSurveys, toggleAddModal, validateForm],
   );
 
+  const handleClickDetail = useCallback(
+    async (id: string) => {
+      history.push(`/admin-panel/enps-surveys/${id}/details`);
+    },
+    [history],
+  );
+
   return (
     <>
       <Header />
       <Modal isOpen={modalStatusNewEnpsSurvey} toggleModal={toggleAddModal}>
         <Form ref={formRef} onSubmit={handleAddEnpsSurvey}>
-          <h2>Novo Pesquisa E-NPS</h2>
+          <h2>Nova Pesquisa E-NPS</h2>
           <br />
           <TextArea
             name="question"
@@ -214,7 +223,7 @@ const AdminEnpsSurveys: React.FC = () => {
         <Content>
           <AddEnpsSurvey onClick={toggleAddModal}>
             <FiPlus />
-            <span>Novo pesquisa E-NPS</span>
+            <span>Nova pesquisa E-NPS</span>
           </AddEnpsSurvey>
 
           {enpsSurveys &&
@@ -249,12 +258,7 @@ const AdminEnpsSurveys: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <Button
-                  light
-                  onClick={() => {
-                    console.log(`Ver detalhes ${enpsSurvey.id}`);
-                  }}
-                >
+                <Button light onClick={() => handleClickDetail(enpsSurvey.id)}>
                   <FiEye />
                   Ver detalhes
                 </Button>
