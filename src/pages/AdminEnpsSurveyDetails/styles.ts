@@ -135,6 +135,17 @@ export const Configs = styled.div`
     font-weight: bold;
     margin-top: 50px;
   }
+
+  .options {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    button:not(:first-of-type) {
+      margin-left: 10px;
+    }
+  }
 `;
 
 export const AnswerHeader = styled.div`

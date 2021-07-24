@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
-import { FiPlus, FiEye } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import * as Yup from 'yup';
 
 import { format, parseISO } from 'date-fns';
 import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
@@ -26,11 +25,8 @@ import {
 import Button from '~/components/Button';
 import api from '~/services/api';
 import Modal from '~/components/Modal';
-import getValidationErrors from '~/utils/getValidationErrors';
+import Loading from '~/components/Loading';
 import { useToast } from '~/hooks/toast';
-import TextArea from '~/components/TextArea';
-import ComboBox from '~/components/ComboBox';
-import DateInput from '~/components/DateInput';
 
 interface IEnpsSurveyData {
   id: string;
@@ -78,6 +74,7 @@ type IParams = {
 const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
   match,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [enpsSurvey, setEnpsSurvey] = useState<IEnpsSurveyData>(
     {} as IEnpsSurveyData,
   );
@@ -89,6 +86,7 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
   );
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
+  const history = useHistory();
 
   const getEnpsAnswers = useCallback(
     async (page?: number): Promise<IEnpsAnswer[]> => {
@@ -113,24 +111,28 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
   );
 
   const loadEnpsSurvey = useCallback(async (): Promise<void> => {
-    const { data } = await api.get<IEnpsSurveyData>(
-      `enps-surveys/${match.params.id}`,
-    );
+    try {
+      const { data } = await api.get<IEnpsSurveyData>(
+        `enps-surveys/${match.params.id}`,
+      );
 
-    const formatted_data = {
-      ...data,
-      promoters_percent: (data.promoters / data.total_responses) * 100,
-      passives_percent: (data.passives / data.total_responses) * 100,
-      detractors_percent: (data.detractors / data.total_responses) * 100,
-      created_at_formatted: format(parseISO(data.created_at), 'dd/MM/yyyy'),
-      end_date_formatted: format(parseISO(data.end_date), 'dd/MM/yyyy'),
-      ended_at_formatted: data.ended_at
-        ? format(parseISO(data.ended_at), 'dd/MM/yyyy')
-        : undefined,
-    };
+      const formatted_data = {
+        ...data,
+        promoters_percent: (data.promoters / data.total_responses) * 100,
+        passives_percent: (data.passives / data.total_responses) * 100,
+        detractors_percent: (data.detractors / data.total_responses) * 100,
+        created_at_formatted: format(parseISO(data.created_at), 'dd/MM/yyyy'),
+        end_date_formatted: format(parseISO(data.end_date), 'dd/MM/yyyy'),
+        ended_at_formatted: data.ended_at
+          ? format(parseISO(data.ended_at), 'dd/MM/yyyy')
+          : undefined,
+      };
 
-    setEnpsSurvey(formatted_data);
-  }, [match.params.id]);
+      setEnpsSurvey(formatted_data);
+    } catch (err) {
+      history.push('/admin-panel/enps-surveys');
+    }
+  }, [history, match.params.id]);
 
   useEffect(() => {
     async function loadEnpsAnswers(): Promise<void> {
@@ -148,10 +150,12 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
 
   const handleEndEnpsSurvey = useCallback(async () => {
     try {
+      setLoading(true);
       await api.patch(`enps-surveys/${match.params.id}/end`);
 
       loadEnpsSurvey();
       toggleEndEnpsSurveyModal();
+      setLoading(false);
     } catch (err) {
       addToast({
         type: 'error',
@@ -161,6 +165,31 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
       });
     }
   }, [addToast, loadEnpsSurvey, match.params.id, toggleEndEnpsSurveyModal]);
+
+  const handleDownloadPDF = useCallback(async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.get(`enps-surveys/${match.params.id}/pdf`, {
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      });
+      const blob = new Blob([data], { type: 'application/pdf' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `pesquisa-enps-${match.params.id}.pdf`;
+      link.click();
+      setLoading(false);
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'Erro ao baixar PDF da pesquisa ENPS',
+        description:
+          'Ocorreu um erro ao baixar o PDF da pesquisa ENPS, tente novamente.',
+      });
+    }
+  }, [addToast, match.params.id]);
 
   const handleScroll = useCallback(async () => {
     if (
@@ -181,6 +210,7 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
 
   return (
     <>
+      <Loading loading={loading} />
       <Header />
       <Modal
         isOpen={modalStatusEndEnpsSurvey}
@@ -291,14 +321,20 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
                 )}
                 {!enpsSurvey.position && <span>Todos</span>}
               </div>
-              <Button
-                light
-                disabled={!!enpsSurvey.ended_at}
-                onClick={() => toggleEndEnpsSurveyModal()}
-              >
-                <FaFlagCheckered />
-                Terminar
-              </Button>
+              <div className="options">
+                <Button
+                  light
+                  disabled={!!enpsSurvey.ended_at}
+                  onClick={() => toggleEndEnpsSurveyModal()}
+                >
+                  <FaFlagCheckered />
+                  Terminar
+                </Button>
+                <Button light onClick={() => handleDownloadPDF()}>
+                  <FiDownload />
+                  Baixar PDF
+                </Button>
+              </div>
             </Configs>
           </Details>
           <br />
