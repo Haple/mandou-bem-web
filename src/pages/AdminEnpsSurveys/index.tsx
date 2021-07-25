@@ -126,6 +126,8 @@ const AdminEnpsSurveys: React.FC = () => {
       try {
         await validateForm(data);
 
+        const question =
+          !data.question || data.question?.trim() === '' ? null : data.question;
         const position_id =
           data.position_id === 'all' ? null : data.position_id;
         const department_id =
@@ -133,7 +135,7 @@ const AdminEnpsSurveys: React.FC = () => {
 
         const response = await api.post<IEnpsSurveyData>('enps-surveys', {
           end_date: data.end_date,
-          question: data.question,
+          question,
           position_id,
           department_id,
         });
@@ -155,6 +157,10 @@ const AdminEnpsSurveys: React.FC = () => {
 
         setEnpsSurveys([formatted_response, ...enpsSurveys]);
         toggleAddModal();
+        addToast({
+          type: 'success',
+          title: 'Pesquisa iniciada com sucesso :)',
+        });
       } catch (err) {
         addToast({
           type: 'error',
