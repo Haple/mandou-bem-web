@@ -24,6 +24,7 @@ import Feed from '~/pages/Feed';
 import Analytics from '~/pages/Analytics';
 import AdminEnpsSurveys from '~/pages/AdminEnpsSurveys';
 import AdminEnpsSurveyDetails from '~/pages/AdminEnpsSurveyDetails';
+import AdminRewardRequestsReport from '~/pages/AdminRewardRequestsReport';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -97,6 +98,14 @@ const Routes: React.FC = () => (
     <Route
       path="/admin-panel/analytics"
       component={Analytics}
+      isPrivate
+      isAdminOnly
+    />
+
+    <Route
+      exact
+      path="/admin-panel/reward-requests-report"
+      component={AdminRewardRequestsReport}
       isPrivate
       isAdminOnly
     />

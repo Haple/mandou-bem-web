@@ -86,6 +86,20 @@ const AdminPanel: React.FC = () => {
             </Button>
           </Option>
           <Option>
+            <img
+              src={analytics}
+              alt="Ilustração com pequenas pessoas movimentando relatórios"
+            />
+            <Button
+              light
+              onClick={() =>
+                history.push('/admin-panel/reward-requests-report')
+              }
+            >
+              Relatório de Resgates
+            </Button>
+          </Option>
+          <Option>
             <img src={survey} alt="Ilustração de uma prancheta de pesquisas" />
             <Button
               light
