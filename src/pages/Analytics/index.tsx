@@ -64,7 +64,7 @@ const Analytics: React.FC = () => {
   return (
     <>
       <Header />
-      <Title>Acompanhe as métricas de sua empresa</Title>
+      <Title>Monitor de Postagens de Reconhecimento</Title>
 
       <Container>
         <Content>
