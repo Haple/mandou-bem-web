@@ -10,6 +10,7 @@ import acceptRequest from '~/assets/draw-accept-request.svg';
 import giftCard from '~/assets/draw-gift-card.svg';
 import analytics from '~/assets/draw-data.svg';
 import survey from '~/assets/draw-survey.svg';
+import socialNetworking from '~/assets/draw-social-networking.svg';
 
 import { Container, Content, Option } from './styles';
 import Button from '~/components/Button';
@@ -96,7 +97,7 @@ const AdminPanel: React.FC = () => {
                 history.push('/admin-panel/reward-requests-report')
               }
             >
-              Relatório de Resgates
+              Relatório de resgates
             </Button>
           </Option>
           <Option>
@@ -109,12 +110,15 @@ const AdminPanel: React.FC = () => {
             </Button>
           </Option>
           <Option>
-            <img src={analytics} alt="???" />
+            <img
+              src={socialNetworking}
+              alt="Ilustração com duas pessoas trocando mensagens"
+            />
             <Button
               light
               onClick={() => history.push('/admin-panel/analytics')}
             >
-              Análise e Inteligência
+              Monitor de postagens
             </Button>
           </Option>
         </Content>

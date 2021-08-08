@@ -11,6 +11,12 @@ const Analytics: React.FC = () => {
   const dailyPointsChartRef = useRef<HTMLDivElement>({} as HTMLDivElement);
   const dailyPostsChartRef = useRef<HTMLDivElement>({} as HTMLDivElement);
   const cloudChartRef = useRef<HTMLDivElement>({} as HTMLDivElement);
+  const postsReceivedPerDepartmentRef = useRef<HTMLDivElement>(
+    {} as HTMLDivElement,
+  );
+  const postsSentPerDepartmentRef = useRef<HTMLDivElement>(
+    {} as HTMLDivElement,
+  );
 
   const { token } = useAuth();
 
@@ -39,6 +45,20 @@ const Analytics: React.FC = () => {
       height: 400,
     });
     cloudPostsChart.render(cloudChartRef.current);
+
+    const postsReceivedPerDepartment = sdk.createChart({
+      chartId: 'ee431e97-ce53-44e3-ba2f-48bb5743b96a',
+      width: 500,
+      height: 400,
+    });
+    postsReceivedPerDepartment.render(postsReceivedPerDepartmentRef.current);
+
+    const postsSentPerDepartment = sdk.createChart({
+      chartId: '1c36f9b3-98f0-48c2-b75f-83f06d913b25',
+      width: 500,
+      height: 400,
+    });
+    postsSentPerDepartment.render(postsSentPerDepartmentRef.current);
   }, [token]);
 
   return (
@@ -51,6 +71,8 @@ const Analytics: React.FC = () => {
           <ChartContainer ref={cloudChartRef} />
           <ChartContainer ref={dailyPostsChartRef} />
           <ChartContainer ref={dailyPointsChartRef} />
+          <ChartContainer ref={postsReceivedPerDepartmentRef} />
+          <ChartContainer ref={postsSentPerDepartmentRef} />
         </Content>
       </Container>
     </>
