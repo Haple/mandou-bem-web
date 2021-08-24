@@ -25,6 +25,7 @@ import Analytics from '~/pages/Analytics';
 import AdminEnpsSurveys from '~/pages/AdminEnpsSurveys';
 import AdminEnpsSurveyDetails from '~/pages/AdminEnpsSurveyDetails';
 import AdminRewardRequestsReport from '~/pages/AdminRewardRequestsReport';
+import MyRewardRequests from '~/pages/MyRewardRequests';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -38,6 +39,7 @@ const Routes: React.FC = () => (
     <Route path="/feed" component={Feed} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
     <Route path="/catalog" component={Catalog} isPrivate />
+    <Route path="/my-reward-requests" component={MyRewardRequests} isPrivate />
     <Route
       exact
       path="/admin-panel"

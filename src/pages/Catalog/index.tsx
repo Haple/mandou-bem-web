@@ -277,7 +277,7 @@ const Catalog: React.FC = () => {
             trabalha. A sua solicitação de resgate vai passar por uma avaliação
             e assim que aprovada você terá acesso ao QR Code usado para usufruir
             da premiação. Acompanhe sua solicitação{' '}
-            <NavLink to="/reward-requests">clicando aqui.</NavLink>
+            <NavLink to="/my-reward-requests">clicando aqui.</NavLink>
           </p>
           <Button onClick={() => toggleCustomRewardSuccessModal()}>Ok</Button>
         </CustomRewardSuccessModal>

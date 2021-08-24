@@ -18,6 +18,9 @@ const Header: React.FC = () => {
           <StyledLink to="/feed">Feed</StyledLink>
           <StyledLink to="/profile">Meu Perfil</StyledLink>
           <StyledLink to="/catalog">Catálogo</StyledLink>
+          <StyledLink to="/my-reward-requests">
+            Meus resgates de prêmios
+          </StyledLink>
           {user?.is_admin && (
             <StyledLink to="/admin-panel">Painel administrativo</StyledLink>
           )}
