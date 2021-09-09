@@ -114,7 +114,8 @@ const AdminRewardRequestsReport: React.FC = () => {
           end_date,
           department_id: department_id === 'all' ? null : department_id,
           position_id: position_id === 'all' ? null : position_id,
-          provider_id: provider_id === 'all' ? null : provider_id,
+          provider_id:
+            !provider_id || provider_id === 'all' ? null : provider_id,
           status: status === 'all' ? null : status,
         },
       },
@@ -150,6 +151,7 @@ const AdminRewardRequestsReport: React.FC = () => {
         description:
           'Ocorreu um erro ao consultar os resgates de prêmios, tente novamente.',
       });
+      setLoading(false);
     }
   }, [addToast, getRewardRequests]);
 
@@ -164,6 +166,8 @@ const AdminRewardRequestsReport: React.FC = () => {
         formRef?.current?.getFieldValue('department_id') || null;
       const position_id =
         formRef?.current?.getFieldValue('position_id') || null;
+      const status = formRef?.current?.getFieldValue('status');
+      const provider_id = formRef?.current?.getFieldValue('provider_id');
 
       const { data } = await api.get(`reward-requests-report/pdf`, {
         params: {
@@ -172,6 +176,9 @@ const AdminRewardRequestsReport: React.FC = () => {
           end_date,
           department_id: department_id === 'all' ? null : department_id,
           position_id: position_id === 'all' ? null : position_id,
+          provider_id:
+            !provider_id || provider_id === 'all' ? null : provider_id,
+          status: status === 'all' ? null : status,
         },
         responseType: 'arraybuffer',
         headers: {
