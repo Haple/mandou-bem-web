@@ -53,6 +53,7 @@ interface IRewardRequest {
 
 const MyRewardRequests: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [rewardType, setRewardType] = useState('custom_reward');
   const [selectedRewardRequest, setSelectedRewardRequest] = useState<
     IRewardRequest
   >({} as IRewardRequest);
@@ -109,6 +110,7 @@ const MyRewardRequests: React.FC = () => {
     const end_date =
       formRef.current?.getFieldValue('end_date') || new Date().toISOString();
     const reward_type = formRef?.current?.getFieldValue('reward_type');
+    const status = formRef?.current?.getFieldValue('status');
 
     const response = await api.get<IPagination<IRewardRequest>>(
       `my-reward-requests`,
@@ -119,6 +121,7 @@ const MyRewardRequests: React.FC = () => {
           size: 10,
           start_date,
           end_date,
+          status: status === 'all' ? null : status,
         },
       },
     );
@@ -181,6 +184,13 @@ const MyRewardRequests: React.FC = () => {
     setRewardRequests([...rewardRequests, ...answers]);
     setPage(page + 1);
   }, [rewardRequests, getRewardRequests, page]);
+
+  const handleRewardTypeChange = useCallback(
+    (data: React.ChangeEvent<HTMLSelectElement>) => {
+      setRewardType(data.target.value);
+    },
+    [],
+  );
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -329,11 +339,34 @@ const MyRewardRequests: React.FC = () => {
               <div>
                 <DateInput name="start_date" label="Data inicial" />
                 <DateInput name="end_date" label="Data final" />
-                <ComboBox name="reward_type" label="Tipo de prêmio">
+              </div>
+              <div>
+                <ComboBox
+                  name="reward_type"
+                  label="Tipo de prêmio"
+                  onChange={handleRewardTypeChange}
+                >
                   <option selected value="custom_reward">
                     Prêmio customizado
                   </option>
                   <option value="gift_card">Vale-presente</option>
+                </ComboBox>
+                <ComboBox name="status" label="Status">
+                  <option selected value="all">
+                    Todos
+                  </option>
+                  {rewardType === 'custom_reward' && (
+                    <>
+                      <option value="pending_approval">
+                        Pendente de aprovação
+                      </option>
+                      <option value="reproved">Recusado</option>
+                    </>
+                  )}
+                  <option value="use_available">
+                    Disponível para utilização
+                  </option>
+                  <option value="used">Utilizado</option>
                 </ComboBox>
               </div>
 

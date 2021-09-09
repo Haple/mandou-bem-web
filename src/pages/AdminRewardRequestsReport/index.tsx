@@ -51,10 +51,17 @@ interface IDepartmentData {
   department_name: string;
 }
 
+interface IProviderData {
+  id: string;
+  company_name: string;
+}
+
 const AdminRewardRequestsReport: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [rewardType, setRewardType] = useState('custom_reward');
   const [positions, setPositions] = useState<IPositionData[]>([]);
   const [departments, setDepartments] = useState<IDepartmentData[]>([]);
+  const [providers, setProviders] = useState<IProviderData[]>([]);
 
   const [rewardRequests, setRewardRequests] = useState<IRewardRequest[]>([]);
   const [page, setPage] = useState(0);
@@ -63,7 +70,7 @@ const AdminRewardRequestsReport: React.FC = () => {
   const { addToast } = useToast();
 
   /**
-   * Load departments and positions
+   * Load departments, positions and providers
    */
   useEffect(() => {
     async function loadPositions(): Promise<void> {
@@ -74,9 +81,12 @@ const AdminRewardRequestsReport: React.FC = () => {
       const response = await api.get<IDepartmentData[]>('departments');
       setDepartments(response.data);
     }
+    async function loadProviders(): Promise<void> {
+      const response = await api.get<IProviderData[]>('providers');
+      setProviders(response.data);
+    }
 
-    loadPositions();
-    loadDepartments();
+    Promise.all([loadPositions(), loadDepartments(), loadProviders()]);
   }, []);
 
   const getRewardRequests = useCallback(async (page?: number): Promise<
@@ -90,6 +100,8 @@ const AdminRewardRequestsReport: React.FC = () => {
     const department_id =
       formRef?.current?.getFieldValue('department_id') || null;
     const position_id = formRef?.current?.getFieldValue('position_id') || null;
+    const status = formRef?.current?.getFieldValue('status');
+    const provider_id = formRef?.current?.getFieldValue('provider_id');
 
     const response = await api.get<IPagination<IRewardRequest>>(
       `reward-requests-report`,
@@ -102,6 +114,8 @@ const AdminRewardRequestsReport: React.FC = () => {
           end_date,
           department_id: department_id === 'all' ? null : department_id,
           position_id: position_id === 'all' ? null : position_id,
+          provider_id: provider_id === 'all' ? null : provider_id,
+          status: status === 'all' ? null : status,
         },
       },
     );
@@ -192,6 +206,13 @@ const AdminRewardRequestsReport: React.FC = () => {
     setPage(page + 1);
   }, [rewardRequests, getRewardRequests, page]);
 
+  const handleRewardTypeChange = useCallback(
+    (data: React.ChangeEvent<HTMLSelectElement>) => {
+      setRewardType(data.target.value);
+    },
+    [],
+  );
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -211,7 +232,11 @@ const AdminRewardRequestsReport: React.FC = () => {
               <div>
                 <DateInput name="start_date" label="Data inicial" />
                 <DateInput name="end_date" label="Data final" />
-                <ComboBox name="reward_type" label="Tipo de prêmio">
+                <ComboBox
+                  name="reward_type"
+                  label="Tipo de prêmio"
+                  onChange={handleRewardTypeChange}
+                >
                   <option selected value="custom_reward">
                     Prêmio customizado
                   </option>
@@ -242,6 +267,39 @@ const AdminRewardRequestsReport: React.FC = () => {
                       </option>
                     ))}
                 </ComboBox>
+              </div>
+
+              <div>
+                <ComboBox name="status" label="Status">
+                  <option selected value="all">
+                    Todos
+                  </option>
+                  {rewardType === 'custom_reward' && (
+                    <>
+                      <option value="pending_approval">
+                        Pendente de aprovação
+                      </option>
+                      <option value="reproved">Recusado</option>
+                    </>
+                  )}
+                  <option value="use_available">
+                    Disponível para utilização
+                  </option>
+                  <option value="used">Utilizado</option>
+                </ComboBox>
+                {rewardType === 'gift_card' && (
+                  <ComboBox name="provider_id" label="Fornecedor">
+                    <option selected value="all">
+                      Todos
+                    </option>
+                    {providers &&
+                      providers.map((provider) => (
+                        <option value={provider.id} key={provider.id}>
+                          {provider.company_name}
+                        </option>
+                      ))}
+                  </ComboBox>
+                )}
               </div>
 
               <div className="actions">
