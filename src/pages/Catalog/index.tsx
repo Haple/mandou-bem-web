@@ -28,6 +28,7 @@ interface ICatalogData {
   description: string;
   reward_type: 'custom-reward' | 'gift-card';
   company_name: string;
+  enabled: boolean;
 }
 
 interface IGiftCardResponse {
@@ -80,7 +81,8 @@ const Catalog: React.FC = () => {
 
   const loadCatalogRewards = useCallback(async () => {
     const response = await api.get<ICatalogData[]>('/catalog');
-    setCatalog(response.data);
+    const catalogRewards = response.data.filter((reward) => reward.enabled);
+    setCatalog(catalogRewards);
   }, []);
 
   useEffect(() => {
@@ -159,9 +161,14 @@ const Catalog: React.FC = () => {
   const handleConfirmRewardRequest = useCallback(async () => {
     if (selectedCatalogReward.reward_type === 'gift-card') {
       setLoading(true);
-      const response =
-        (await handleCreateGiftCardRequest(selectedCatalogReward.id)) ||
-        ({} as IGiftCardResponse);
+      const response = await handleCreateGiftCardRequest(
+        selectedCatalogReward.id,
+      );
+      if (!response) {
+        setLoading(false);
+        toggleSelectCatalogModal();
+        return;
+      }
       const response_formmated = {
         ...response,
         expire_at_formatted: format(parseISO(response.expire_at), 'dd/MM/yyy'),

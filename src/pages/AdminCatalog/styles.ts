@@ -80,3 +80,53 @@ export const AddCatalogReward = styled.button`
     height: 80px;
   }
 `;
+
+export const SelectedGiftCardModal = styled.div`
+  div:nth-of-type(1n) {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+
+    span {
+      label {
+        font-weight: bold;
+      }
+    }
+  }
+
+  div:nth-of-type(2n) {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    button:not(:first-of-type) {
+      margin-left: 10px;
+    }
+  }
+`;
+
+export const SwitchGiftCardModal = styled.div`
+  div:nth-of-type(1n) {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+
+    span {
+      label {
+        font-weight: bold;
+      }
+    }
+  }
+
+  div:nth-of-type(2n) {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    button:not(:first-of-type) {
+      margin-left: 10px;
+    }
+  }
+`;
