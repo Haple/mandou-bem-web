@@ -339,6 +339,9 @@ const AdminCatalog: React.FC = () => {
           />
           <TextArea name="description" label="Política de resgate do prêmio" />
 
+          <Button light onClick={() => toggleAddModal()}>
+            Cancelar
+          </Button>
           <Button type="submit">Salvar</Button>
         </Form>
       </Modal>
@@ -384,6 +387,9 @@ const AdminCatalog: React.FC = () => {
             defaultValue={editingCatalogReward.description}
           />
 
+          <Button light onClick={() => toggleEditModal()}>
+            Cancelar
+          </Button>
           <Button type="submit">Salvar</Button>
         </Form>
       </Modal>
@@ -484,7 +490,7 @@ const AdminCatalog: React.FC = () => {
       </Modal>
 
       <Container>
-        <h2>Deixe o catálogo com a cara da sua empresa</h2>
+        <h3>Deixe o catálogo com a cara da sua empresa</h3>
         <Content>
           <AddCatalogReward onClick={toggleAddModal}>
             <FiPlus />

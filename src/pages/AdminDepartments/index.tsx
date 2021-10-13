@@ -14,6 +14,7 @@ import Input from '~/components/Input';
 import Modal from '~/components/Modal';
 import getValidationErrors from '~/utils/getValidationErrors';
 import { useToast } from '~/hooks/toast';
+import Loading from '~/components/Loading';
 
 interface IDepartmentData {
   id: string;
@@ -25,6 +26,8 @@ interface INewDepartment {
 }
 
 const AdminDepartments: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+
   const [departments, setDepartments] = useState<IDepartmentData[]>([]);
   const [editingDepartment, setEditingDepartment] = useState<IDepartmentData>(
     {} as IDepartmentData,
@@ -81,6 +84,7 @@ const AdminDepartments: React.FC = () => {
 
   const handleAddDepartment = useCallback(
     async (data: INewDepartment) => {
+      setLoading(true);
       try {
         await validateForm(data);
 
@@ -98,6 +102,7 @@ const AdminDepartments: React.FC = () => {
             'Ocorreu um erro ao criar o departamento, tente novamente.',
         });
       }
+      setLoading(false);
     },
     [addToast, departments, toggleAddModal, validateForm],
   );
@@ -112,6 +117,7 @@ const AdminDepartments: React.FC = () => {
 
   const editDepartment = useCallback(
     async (data: IDepartmentData) => {
+      setLoading(true);
       try {
         await validateForm(data);
 
@@ -135,6 +141,7 @@ const AdminDepartments: React.FC = () => {
             'Ocorreu um erro ao editar o departamento, tente novamente.',
         });
       }
+      setLoading(false);
     },
     [
       addToast,
@@ -147,6 +154,7 @@ const AdminDepartments: React.FC = () => {
 
   const handleDeleteDepartment = useCallback(
     async (id: string) => {
+      setLoading(true);
       try {
         await api.delete<IDepartmentData>(`departments/${id}`);
         const updatedDepartments = departments.filter((d) => d.id !== id);
@@ -159,12 +167,15 @@ const AdminDepartments: React.FC = () => {
             'Ocorreu um erro ao deletar o departamento, tente novamente.',
         });
       }
+      setLoading(false);
     },
     [addToast, departments],
   );
 
   return (
     <>
+      <Loading loading={loading} />
+
       <Header />
       <Modal isOpen={modalStatusNewDepartment} toggleModal={toggleAddModal}>
         <Form ref={formRef} onSubmit={handleAddDepartment}>
@@ -172,6 +183,9 @@ const AdminDepartments: React.FC = () => {
           <br />
           <Input name="department_name" label="Nome do departamento *" />
 
+          <Button light onClick={() => toggleAddModal()}>
+            Cancelar
+          </Button>
           <Button type="submit">Salvar</Button>
         </Form>
       </Modal>
@@ -186,12 +200,15 @@ const AdminDepartments: React.FC = () => {
             defaultValue={editingDepartment.department_name}
           />
 
+          <Button light onClick={() => toggleEditModal()}>
+            Cancelar
+          </Button>
           <Button type="submit">Salvar</Button>
         </Form>
       </Modal>
 
       <Container>
-        <h2>Gerenciar Departamentos</h2>
+        <h3>Gerenciar Departamentos</h3>
         <Content>
           <AddDepartment onClick={toggleAddModal}>
             <FiPlus />

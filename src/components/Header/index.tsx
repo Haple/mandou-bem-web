@@ -11,9 +11,20 @@ const Header: React.FC = () => {
   return (
     <Container toggled={toggled}>
       <header>
-        <h2>
-          Mandou <b>Bem</b>
-        </h2>
+        <div className="firstRow">
+          <div>
+            <h2>
+              Mandou <b>Bem</b>
+            </h2>
+          </div>
+
+          <MenuButton>
+            <button type="button" onClick={() => setToggled(!toggled)}>
+              <FiMenu />
+            </button>
+          </MenuButton>
+        </div>
+
         <nav>
           <StyledLink to="/feed">Feed</StyledLink>
           <StyledLink to="/profile">Meu Perfil</StyledLink>
@@ -25,12 +36,6 @@ const Header: React.FC = () => {
             <StyledLink to="/admin-panel">Painel administrativo</StyledLink>
           )}
         </nav>
-
-        <MenuButton>
-          <button type="button" onClick={() => setToggled(!toggled)}>
-            <FiMenu />
-          </button>
-        </MenuButton>
       </header>
     </Container>
   );

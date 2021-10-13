@@ -9,10 +9,15 @@ export const Container = styled.div<ContainerProps>`
   background: #b987e1;
 
   header {
-    padding: 26px;
+    padding: 2em;
     display: flex;
     height: 100%;
-    align-items: center;
+
+    .firstRow {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+    }
 
     nav {
       a {
@@ -27,17 +32,17 @@ export const Container = styled.div<ContainerProps>`
       }
     }
 
-    @media screen and (min-width: 700px) {
+    @media screen and (min-width: 1000px) {
       flex-direction: row;
 
       nav {
         a {
-          margin-left: 62px;
+          margin-left: 3em;
         }
       }
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 1000px) {
       flex-direction: column;
 
       nav {
@@ -67,9 +72,8 @@ export const Container = styled.div<ContainerProps>`
 
 export const MenuButton = styled.div`
   display: none;
-  margin-top: 20px;
 
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 1000px) {
     float: right;
     display: block;
   }
