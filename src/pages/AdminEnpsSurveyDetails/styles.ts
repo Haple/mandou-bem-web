@@ -6,22 +6,22 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
-    margin-top: 20px;
+  h3 {
+    margin-top: 1em;
     color: #788896;
+    text-align: center;
   }
 `;
 
 export const Content = styled.div`
-  /* @media (min-width: 800px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  } */
-  width: 100%;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
+  max-width: 1000px;
 
-  h3 {
+  h4 {
     font-weight: bold;
   }
 `;
@@ -31,11 +31,10 @@ interface ClassificationProps {
 }
 export const Classification = styled.div<ClassificationProps>`
   border-radius: 25px;
-  margin: 10px;
+  margin: 1em 0;
   background: #dfe6ed;
   display: flex;
   flex-direction: row;
-  width: 100%;
 
   span {
     margin: 5px;
@@ -75,21 +74,23 @@ export const Classification = styled.div<ClassificationProps>`
 `;
 
 export const Details = styled.div`
-  /* padding: 30px; */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80%;
+  @media (min-width: 950px) {
+    display: grid;
+    grid-row-gap: 1em;
+    grid-column-gap: 1em;
+    grid-template-columns: repeat(5, 1fr);
+  }
 
   font-size: 16px;
   color: #293845;
 `;
 
 export const Results = styled.div`
+  grid-column: span 3;
+
   background: #fff;
   border: 2px solid #c5ced6;
-  width: 54%;
-  padding: 15px;
+  padding: 1em;
 
   .no-answers {
     width: 100%;
@@ -101,36 +102,39 @@ export const Results = styled.div`
   }
 
   .enps-container {
-    display: flex;
-    flex-direction: row;
     width: 100%;
 
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
   }
 
   .classifications {
-    width: 70%;
-    margin: 10px;
+    width: 100%;
+    margin: 1em;
   }
 
   .total-answers {
     font-style: italic;
     width: 100%;
     text-align: right;
-    padding: 10px;
   }
 `;
 
 export const Configs = styled.div`
+  grid-column: span 2;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background: #fff;
   border: 2px solid #c5ced6;
-  width: 44%;
   padding: 15px;
+
   label {
     font-weight: bold;
     margin-top: 50px;
@@ -154,11 +158,10 @@ export const AnswerHeader = styled.div`
   padding: 15px;
   font-size: 16px;
   color: #293845;
-  margin-bottom: 5px;
 `;
 
 export const AnswersContainer = styled.div`
-  width: 80%;
+  width: 100%;
   font-size: 16px;
   color: #293845;
 
@@ -172,6 +175,13 @@ export const AnswersContainer = styled.div`
 
     th {
       text-align: left;
+    }
+
+    th[scope='row'] {
+      position: -webkit-sticky;
+      position: sticky;
+      left: 0;
+      z-index: 1;
     }
 
     tr:hover {
@@ -192,9 +202,10 @@ interface EnpsScoreProps {
 
 export const EnpsScore = styled.div<EnpsScoreProps>`
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    margin: 5px 10px;
+
+    min-width: 100px;
+    min-height: 100px;
+
     display: flex;
     flex-direction: column;
 

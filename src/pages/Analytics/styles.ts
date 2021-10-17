@@ -22,6 +22,11 @@ export const Content = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1100px) {
+    flex-direction: column;
+    overflow-x: auto;
+  }
 `;
 
 export const ChartContainer = styled.div`

@@ -6,10 +6,14 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2,
-  h3 {
+  h2 {
     margin: 20px 0;
     color: #788896;
+  }
+  h3 {
+    margin-top: 1em;
+    color: #788896;
+    text-align: center;
   }
 `;
 
@@ -21,9 +25,10 @@ export const RewardRequest = styled.div`
   background: #fff;
   border: 2px solid #c5ced6;
 
-  width: 65%;
+  width: 100%;
+  max-width: 900px;
   margin: 5px;
-  padding: 20px;
+  padding: 1em;
 
   > div {
     display: flex;
@@ -32,16 +37,20 @@ export const RewardRequest = styled.div`
 
     display: flex;
     flex-direction: row;
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
     justify-content: space-between;
 
-    button {
+    /* button {
       max-width: 49%;
-    }
+    } */
   }
 
   img {
     margin: 10px;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     align-self: center;
   }
 `;

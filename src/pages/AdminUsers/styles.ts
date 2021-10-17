@@ -6,10 +6,11 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
-    margin-top: 20px;
+  h3 {
+    margin-top: 1em;
     color: #788896;
-  }
+    text-align: center;
+  }}
 
   form {
     h1 {
@@ -63,7 +64,7 @@ export const UserCard = styled.div`
         font-weight: bold;
         padding-bottom: 5px;
       }
-      
+
       span {
         overflow-wrap: break-word;
         inline-size: 150px;

@@ -157,7 +157,7 @@ const AdminRewardRequests: React.FC = () => {
       </Modal>
 
       <Container>
-        <h2>Controle as solicitações de prêmios customizados</h2>
+        <h3>Controle as solicitações de prêmios customizados</h3>
 
         {rewardRequests && rewardRequests.length === 0 && (
           <h3>(Ainda não há nenhuma solicitação de prêmio customizado)</h3>
@@ -166,7 +166,7 @@ const AdminRewardRequests: React.FC = () => {
         {rewardRequests &&
           rewardRequests.map((rewardRequest) => (
             <RewardRequest key={rewardRequest.id}>
-              <div>
+              <div className="content">
                 <img
                   src={
                     rewardRequest.user.avatar
@@ -190,7 +190,7 @@ const AdminRewardRequests: React.FC = () => {
                   </span>
                 </div>
               </div>
-              <div>
+              <div className="actions">
                 <Button
                   light
                   onClick={() => handleApproveRewardRequest(rewardRequest.id)}

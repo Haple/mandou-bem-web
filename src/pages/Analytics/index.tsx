@@ -25,26 +25,31 @@ const Analytics: React.FC = () => {
       baseUrl: 'https://charts.mongodb.com/charts-project-0-sqroh',
       getUserToken: () => token,
     });
+
+    const cloudPostsChart = sdk.createChart({
+      chartId: '5bb11eeb-eb7a-4eff-a117-745e44994515',
+      width: 600,
+      height: 400,
+      // width: '60%',
+      // height: 400,
+    });
+    cloudPostsChart.render(cloudChartRef.current);
+
+    const dailyPostsChart = sdk.createChart({
+      chartId: 'e4f176a0-f377-4bea-a49b-33151454a6e7',
+      width: 400,
+      height: 400,
+      // width: '40%',
+      // height: 400,
+    });
+    dailyPostsChart.render(dailyPostsChartRef.current);
+
     const dailyPointsChart = sdk.createChart({
       chartId: 'f7aa6eeb-fb17-4468-ab91-7163e235c5b8',
       width: 1020,
       height: 400,
     });
     dailyPointsChart.render(dailyPointsChartRef.current);
-
-    const dailyPostsChart = sdk.createChart({
-      chartId: 'e4f176a0-f377-4bea-a49b-33151454a6e7',
-      width: 400,
-      height: 400,
-    });
-    dailyPostsChart.render(dailyPostsChartRef.current);
-
-    const cloudPostsChart = sdk.createChart({
-      chartId: '5bb11eeb-eb7a-4eff-a117-745e44994515',
-      width: 600,
-      height: 400,
-    });
-    cloudPostsChart.render(cloudChartRef.current);
 
     const postsReceivedPerDepartment = sdk.createChart({
       chartId: 'ee431e97-ce53-44e3-ba2f-48bb5743b96a',

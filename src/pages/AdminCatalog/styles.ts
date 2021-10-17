@@ -14,7 +14,6 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  display: grid;
   margin: 1em;
   padding: 1em;
   width: 100%;

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { FiDownload, FiSearch } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { format, parseISO } from 'date-fns';
 
@@ -201,13 +202,7 @@ const AdminRewardRequestsReport: React.FC = () => {
     }
   }, [addToast]);
 
-  const handleScroll = useCallback(async () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    )
-      return;
-
+  const handleNextPage = useCallback(async () => {
     const answers = await getRewardRequests(page + 1);
     setRewardRequests([...rewardRequests, ...answers]);
     setPage(page + 1);
@@ -220,18 +215,13 @@ const AdminRewardRequestsReport: React.FC = () => {
     [],
   );
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
   return (
     <>
       <Loading loading={loading} />
       <Header />
 
       <Container>
-        <h2>Relatório de Resgates de Prêmios</h2>
+        <h3>Relatório de Resgates de Prêmios</h3>
         <br />
         <Content>
           <SearchOptions>
@@ -327,29 +317,39 @@ const AdminRewardRequestsReport: React.FC = () => {
           </SearchOptions>
           <br />
           <RewardRequestsContainer>
-            <table>
-              <thead>
-                <th>Data</th>
-                <th>Colaborador(a)</th>
-                <th>Prêmio</th>
-                <th>Status</th>
-                <th>Cargo</th>
-                <th>Departamento</th>
-              </thead>
-              <tbody>
-                {rewardRequests &&
-                  rewardRequests.map((rewardRequest) => (
-                    <tr key={rewardRequest.id}>
-                      <td>{rewardRequest.created_at}</td>
-                      <td>{rewardRequest.user_name}</td>
-                      <td>{rewardRequest.reward_title}</td>
-                      <td>{rewardRequest.status_formatted}</td>
-                      <td>{rewardRequest.position_name}</td>
-                      <td>{rewardRequest.department_name}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+            <InfiniteScroll
+              dataLength={rewardRequests.length}
+              next={handleNextPage}
+              hasMore
+              loader={<></>}
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Colaborador(a)</th>
+                    <th>Prêmio</th>
+                    <th>Status</th>
+                    <th>Cargo</th>
+                    <th>Departamento</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {rewardRequests &&
+                    rewardRequests.map((rewardRequest) => (
+                      <tr key={rewardRequest.id}>
+                        <td>{rewardRequest.created_at}</td>
+                        <td>{rewardRequest.user_name}</td>
+                        <td>{rewardRequest.reward_title}</td>
+                        <td>{rewardRequest.status_formatted}</td>
+                        <td>{rewardRequest.position_name}</td>
+                        <td>{rewardRequest.department_name}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </InfiniteScroll>
           </RewardRequestsContainer>
         </Content>
       </Container>

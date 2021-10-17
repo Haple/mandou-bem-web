@@ -6,9 +6,10 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
-    margin-top: 20px;
+  h3 {
+    margin-top: 1em;
     color: #788896;
+    text-align: center;
   }
 `;
 
@@ -18,8 +19,10 @@ export const Content = styled.div`
     grid-template-columns: 1fr 1fr;
   } */
   width: 100%;
-  display: grid;
-  place-items: center;
+  max-width: 1000px;
+  /* padding: 1em; */
+  /* display: grid;
+  place-items: center; */
 
   h3 {
     font-weight: bold;
@@ -27,7 +30,8 @@ export const Content = styled.div`
 `;
 
 export const RewardRequestsContainer = styled.div`
-  width: 80%;
+  overflow-x: auto;
+  width: 100%;
   font-size: 16px;
   color: #293845;
 
@@ -126,13 +130,16 @@ export const EndEnpsSurveyModal = styled.div`
 export const SearchOptions = styled.div`
   background: #fff;
   border: 2px solid #c5ced6;
-  width: 80%;
+  width: 100%;
   padding: 15px;
 
   div {
     margin: 5px;
     display: flex;
     flex-direction: row;
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
   }
 
   .actions {

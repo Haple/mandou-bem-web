@@ -6,10 +6,14 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2,
-  h3 {
+  h2 {
     margin: 20px 0;
     color: #788896;
+  }
+  h3 {
+    margin-top: 1em;
+    color: #788896;
+    text-align: center;
   }
 `;
 
@@ -21,20 +25,30 @@ export const RewardRequest = styled.div`
   background: #fff;
   border: 2px solid #c5ced6;
 
-  width: 65%;
-  margin: 5px;
+  /* width: 65%; */
+  width: 100%;
+  max-width: 900px;
+  margin: 1em;
   padding: 20px;
 
-  div:nth-of-type(1n) {
+  .content {
     display: flex;
     flex-direction: row;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     justify-content: left;
     margin-top: 10px;
 
     img {
       border-radius: 50%;
       margin-right: 10px;
-      height: 60px;
+      max-width: 60px;
+      max-height: 60px;
+      min-width: 60px;
+      min-height: 60px;
     }
 
     > div {
@@ -50,13 +64,20 @@ export const RewardRequest = styled.div`
     }
   }
 
-  div:nth-of-type(2n) {
+  .actions {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 
     button {
       margin: 10px;
+    }
+    @media (max-width: 500px) {
+      flex-direction: column;
+      justify-content: center;
+      button {
+        margin: 5px 0px;
+      }
     }
   }
 `;

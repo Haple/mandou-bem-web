@@ -17,6 +17,7 @@ import Input from '~/components/Input';
 import ComboBox from '~/components/ComboBox';
 import Modal from '~/components/Modal';
 import Header from '~/components/Header';
+import Loading from '~/components/Loading';
 
 interface IUserData {
   id: string;
@@ -47,6 +48,8 @@ interface IDepartmentData {
 }
 
 const AdminUsers: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+
   const [users, setUsers] = useState<IUserData[]>([]);
   const [positions, setPositions] = useState<IPositionData[]>([]);
   const [departments, setDepartments] = useState<IDepartmentData[]>([]);
@@ -107,6 +110,7 @@ const AdminUsers: React.FC = () => {
 
   const handleNewUser = useCallback(
     async (data: INewUser) => {
+      setLoading(true);
       try {
         await validateForm(data);
 
@@ -131,6 +135,7 @@ const AdminUsers: React.FC = () => {
           description: 'Ocorreu um erro ao criar o usuário, tente novamente.',
         });
       }
+      setLoading(false);
     },
     [addToast, users, toggleNewUserModal, validateForm],
   );
@@ -145,6 +150,7 @@ const AdminUsers: React.FC = () => {
 
   const editUser = useCallback(
     async (data: IUserData) => {
+      setLoading(true);
       try {
         await validateForm(data);
 
@@ -169,12 +175,14 @@ const AdminUsers: React.FC = () => {
           description: 'Ocorreu um erro ao editar o usuário, tente novamente.',
         });
       }
+      setLoading(false);
     },
     [addToast, editingUser.id, toggleEditModal, users, validateForm],
   );
 
   const handleDeleteUser = useCallback(
     async (id: string) => {
+      setLoading(true);
       try {
         await api.delete<IUserData>(`users/${id}`);
         const updatedUsers = users.filter((user) => user.id !== id);
@@ -190,12 +198,14 @@ const AdminUsers: React.FC = () => {
           description: 'Ocorreu um erro ao deletar o usuário, tente novamente.',
         });
       }
+      setLoading(false);
     },
     [addToast, users],
   );
 
   return (
     <>
+      <Loading loading={loading} />
       <Header />
       <Modal isOpen={modalStatusNewUser} toggleModal={toggleNewUserModal}>
         <Form ref={formRef} onSubmit={handleNewUser}>
@@ -254,7 +264,7 @@ const AdminUsers: React.FC = () => {
       </Modal>
 
       <Container>
-        <h2>Gerencie os usuários da sua conta</h2>
+        <h3>Gerencie os usuários da sua conta</h3>
         <Content>
           <AddUser onClick={toggleNewUserModal}>
             <FiPlus />

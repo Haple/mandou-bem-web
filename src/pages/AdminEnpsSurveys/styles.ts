@@ -6,17 +6,23 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
-    margin-top: 20px;
+  h3 {
+    margin-top: 1em;
     color: #788896;
+    text-align: center;
   }
 `;
 
 export const Content = styled.div`
-  @media (min-width: 700px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
+  margin: 1em;
+  padding: 1em;
+  width: 100%;
+  max-width: 700px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-row-gap: 1em;
+  grid-column-gap: 1em;
 `;
 
 interface EnpsScoreProps {
@@ -72,7 +78,7 @@ export const EnpsSurvey = styled.div`
   background: #fff;
   border: 2px solid #c5ced6;
 
-  max-width: 300px;
+  /* max-width: 300px; */
   margin: 5px;
   padding: 20px;
 
@@ -97,7 +103,6 @@ export const AddEnpsSurvey = styled.button`
   background: #fff;
   border: 2px dashed #c5ced6;
 
-  width: 300px;
   margin: 5px;
   padding: 30px;
 

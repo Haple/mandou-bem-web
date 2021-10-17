@@ -7,6 +7,7 @@ import { FormHandles } from '@unform/core';
 import { format, parseISO } from 'date-fns';
 import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 import { FaFlagCheckered } from 'react-icons/fa';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import drawSearching from '~/assets/draw-searching.svg';
 import Header from '~/components/Header';
 
@@ -191,22 +192,11 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
     }
   }, [addToast, match.params.id]);
 
-  const handleScroll = useCallback(async () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    )
-      return;
-
+  const handleNextPage = useCallback(async () => {
     const answers = await getEnpsAnswers(page + 1);
     setEnpsAnswers([...enpsAnswers, ...answers]);
     setPage(page + 1);
   }, [enpsAnswers, getEnpsAnswers, page]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
 
   return (
     <>
@@ -238,12 +228,12 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
       </Modal>
 
       <Container>
-        <h2>Detalhes de Pesquisa E-NPS</h2>
+        <h3>Detalhes de Pesquisa E-NPS</h3>
         <br />
         <Content>
           <Details>
             <Results>
-              <h3>Resultados</h3> <br />
+              <h4>Resultados</h4> <br />
               {enpsSurvey.total_responses <= 0 && (
                 <div className="no-answers">
                   <img
@@ -283,13 +273,13 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
                     </div>
                   </div>
                   <div className="total-answers">
-                    {enpsSurvey.total_responses} Respondentes
+                    {enpsSurvey.total_responses} Respondente(s)
                   </div>
                 </>
               )}
             </Results>
             <Configs>
-              <h3>Configurações</h3>
+              <h4>Configurações</h4>
               <div>
                 <label>Pergunta realizada:</label> <br />
                 <span>
@@ -340,26 +330,33 @@ const AdminEnpsSurveyDetail: React.FC<RouteComponentProps<IParams>> = ({
           <br />
           <AnswersContainer>
             <AnswerHeader>
-              <h3>Respostas individuais</h3>
+              <h4>Respostas individuais</h4>
             </AnswerHeader>
 
-            <table>
-              <thead>
-                <th>Data</th>
-                <th>Nota</th>
-                <th>Resposta</th>
-              </thead>
-              <tbody>
-                {enpsAnswers &&
-                  enpsAnswers.map((enpsAnswer) => (
-                    <tr key={enpsAnswer.id}>
-                      <td>{enpsAnswer.created_at_formatted}</td>
-                      <td>{enpsAnswer.score}</td>
-                      <td>{enpsAnswer.answer}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+            <InfiniteScroll
+              dataLength={enpsAnswers.length}
+              next={handleNextPage}
+              hasMore
+              loader={<></>}
+            >
+              <table>
+                <thead>
+                  <th>Data</th>
+                  <th>Nota</th>
+                  <th>Resposta</th>
+                </thead>
+                <tbody>
+                  {enpsAnswers &&
+                    enpsAnswers.map((enpsAnswer) => (
+                      <tr key={enpsAnswer.id}>
+                        <td>{enpsAnswer.created_at_formatted}</td>
+                        <td>{enpsAnswer.score}</td>
+                        <td>{enpsAnswer.answer}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </InfiniteScroll>
           </AnswersContainer>
         </Content>
       </Container>

@@ -225,7 +225,7 @@ const AdminEnpsSurveys: React.FC = () => {
       </Modal>
 
       <Container>
-        <h2>Pesquisas E-NPS</h2>
+        <h3>Pesquisas E-NPS</h3>
         <Content>
           <AddEnpsSurvey onClick={toggleAddModal}>
             <FiPlus />

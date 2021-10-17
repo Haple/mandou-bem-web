@@ -234,7 +234,7 @@ const AdminValidateReward: React.FC = () => {
       </Modal>
 
       <Container>
-        <h2>Validar utilização de prêmio customizado</h2>
+        <h3>Validar utilização de prêmio customizado</h3>
 
         <RewardRequest>
           <div>
