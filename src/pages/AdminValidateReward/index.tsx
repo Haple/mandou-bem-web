@@ -6,6 +6,7 @@ import { format, parseISO } from 'date-fns';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import Header from '~/components/Header';
+import Loading from '~/components/Loading';
 
 import {
   Container,
@@ -46,6 +47,7 @@ interface IGetRewardRequestFormData {
 }
 
 const AdminValidateReward: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const [modalStatusValidateReward, setModalStatusValidateReward] = useState(
     false,
   );
@@ -76,6 +78,7 @@ const AdminValidateReward: React.FC = () => {
 
   const handleGetRewardRequest = useCallback(
     async (id: string) => {
+      setLoading(true);
       try {
         const { data } = await api.get<ICustomRewardRequest>(
           `/custom-reward-requests/${id}`,
@@ -109,11 +112,13 @@ const AdminValidateReward: React.FC = () => {
             'Ocorreu um erro ao buscar o prêmio customizado, tente novamente.',
         });
       }
+      setLoading(false);
     },
     [addToast],
   );
 
   const handleValidateReward = useCallback(async () => {
+    setLoading(true);
     try {
       await api.patch<ICustomRewardRequest>(
         `/custom-reward-requests/${rewardRequest?.id}/validate`,
@@ -132,6 +137,7 @@ const AdminValidateReward: React.FC = () => {
           'Ocorreu um erro ao validar o prêmio customizado, tente novamente.',
       });
     }
+    setLoading(false);
   }, [addToast, rewardRequest, toggleValidateRewardModal]);
 
   const handleScan = useCallback(
@@ -166,6 +172,7 @@ const AdminValidateReward: React.FC = () => {
 
   return (
     <>
+      <Loading loading={loading} />
       <Header />
 
       <Modal
