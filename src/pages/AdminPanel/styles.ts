@@ -23,7 +23,7 @@ export const Option = styled.div`
   border: 2px solid #c5ced6;
 
   max-width: 300px;
-  margin: 20px;
+  margin: 0.5em;
   padding: 30px;
 
   img {
