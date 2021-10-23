@@ -10,7 +10,7 @@ export const Container = styled.div`
     margin-top: 1em;
     color: #788896;
     text-align: center;
-  }}
+  }
 
   form {
     h1 {

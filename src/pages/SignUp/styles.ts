@@ -2,18 +2,11 @@ import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div`
-  /* height: 100vh; */
-  flex-direction: column;
-  /* flex: 1; */
-
-  background: #b987e1;
-
+  height: 100%;
+  min-height: 100vh;
   display: flex;
-  /* align-items: stretch; */
-
-  > img {
-    max-height: 200px;
-  }
+  flex-direction: column;
+  background: #b987e1;
 `;
 
 export const Header = styled.header`
@@ -28,20 +21,33 @@ export const HeaderContent = styled.div`
 `;
 
 export const Content = styled.div`
+  margin: 1em;
   flex-wrap: wrap;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 100px;
+  justify-content: space-around;
+  @media (max-width: 500px) {
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
-  /* width: 100%; */
+  .welcome {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  > span {
-    margin-bottom: auto;
-    margin-right: 100px;
-    max-width: 450px;
-    font-size: 30px;
+    > span {
+      font-size: 30px;
+    }
+
+    > img {
+      align-self: center;
+      width: 100%;
+      max-height: 250px;
+    }
   }
 `;
 
@@ -57,11 +63,14 @@ const appearFromRight = keyframes`
 `;
 
 export const AnimationContainer = styled.div`
+  margin-top: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: auto;
+  width: 100%;
+  max-width: 500px;
 
   animation: ${appearFromRight} 1s;
 
@@ -69,7 +78,8 @@ export const AnimationContainer = styled.div`
     background: #ffffff;
     padding: 16px;
     border: 2px solid #c5ced6;
-    width: 340px;
+    width: 100%;
+    max-width: 340px;
     text-align: center;
 
     h1 {

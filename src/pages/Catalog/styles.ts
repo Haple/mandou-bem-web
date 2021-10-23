@@ -6,9 +6,10 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
-    margin-top: 20px;
+  h3 {
+    margin-top: 1em;
     color: #788896;
+    text-align: center;
     span {
       font-weight: bold;
     }

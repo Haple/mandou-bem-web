@@ -36,13 +36,15 @@ export const AnimationContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 
   animation: ${appearFromTop} 1s;
 
   form {
     background: #ffffff;
     margin: 30px 0;
-    width: 340px;
+    width: 100%;
+    max-width: 340px;
     text-align: center;
     padding: 16px;
     border: 2px solid #c5ced6;

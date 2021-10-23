@@ -10,6 +10,7 @@ import getValidationErrors from '~/utils/getValidationErrors';
 
 import Input from '~/components/Input';
 import Button from '~/components/Button';
+import Loading from '~/components/Loading';
 
 import {
   Container,
@@ -72,7 +73,7 @@ const ForgotPassword: React.FC = () => {
           type: 'error',
           title: 'Erro na recuperação de senha',
           description:
-            'Ocorreu um erro ao tentar realizar a recuperação de senha, tenta novamente.',
+            'Ocorreu um erro ao tentar realizar a recuperação de senha, tentar novamente.',
         });
       } finally {
         setLoading(false);
@@ -83,6 +84,7 @@ const ForgotPassword: React.FC = () => {
 
   return (
     <Container>
+      <Loading loading={loading} />
       <Header>
         <HeaderContent>
           <h2>
@@ -95,7 +97,7 @@ const ForgotPassword: React.FC = () => {
         <AnimationContainer>
           <h2>Recuperar senha</h2>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <Input name="email" icon={FiMail} placeholder="E-mail" />
+            <Input name="email" icon={FiMail} label="E-mail" />
 
             <Button loading={loading} type="submit">
               Recuperar

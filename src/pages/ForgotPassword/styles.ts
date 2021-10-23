@@ -50,13 +50,15 @@ export const AnimationContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
+  width: 100%;
 
   animation: ${appearFromTop} 1s;
 
   form {
     background: #ffffff;
     margin: 30px 0;
-    width: 340px;
+    width: 100%;
+    max-width: 320px;
     text-align: center;
     padding: 16px;
     border: 2px solid #c5ced6;

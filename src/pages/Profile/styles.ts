@@ -18,7 +18,8 @@ export const Content = styled.div`
     border: 2px solid #c5ced6;
     padding: 20px;
     margin: 30px 0;
-    width: 340px;
+    width: 100%;
+    max-width: 340px;
     text-align: center;
     display: flex;
     flex-direction: column;

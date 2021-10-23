@@ -2,11 +2,18 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   /* background: #5c5c; */
-  margin: 20px 160px;
+  /* margin: 20px 160px; */
+  width: 100%;
+  /* margin: 1em; */
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: center;
 
-  @media screen and (max-width: 700px) {
+  aside {
+    margin: 1em;
+  }
+
+  @media screen and (max-width: 800px) {
     aside {
       display: none;
     }
@@ -14,22 +21,28 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+  margin: 0 1em;
+  @media screen and (max-width: 500px) {
+    margin: 0;
+  }
+  max-width: 700px;
   /* background: #fff444; */
 
   /* flex-wrap: wrap; */
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  width: 650px;
-  margin-right: 20px;
+  justify-content: center;
+  align-items: center; */
+  /* max-width: 650px; */
+  /* margin-right: 20px; */
 
   h2 {
-    font-size: 24px;
-
+    margin-top: 1em;
     color: #788896;
+    text-align: center;
     strong {
       font-weight: bold;
     }
-    margin-bottom: 10px;
   }
 `;
 
@@ -44,7 +57,7 @@ export const Post = styled.div`
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 
-  div:nth-child(1) {
+  .fromTo {
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
@@ -63,7 +76,7 @@ export const Post = styled.div`
     }
   }
 
-  div:nth-child(2) {
+  .content {
     li {
       list-style: none;
 
@@ -75,7 +88,7 @@ export const Post = styled.div`
     }
   }
 
-  div:nth-child(3) {
+  .comments {
     margin-top: 10px;
     display: flex;
     flex-direction: row;
@@ -96,10 +109,27 @@ export const Post = styled.div`
       margin: 5px 0px 5px 10px;
       width: auto;
     }
+
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+      button {
+        margin: 5px;
+        width: 100%;
+      }
+    }
   }
 `;
 
 export const NewPost = styled.div`
+  @media screen and (max-width: 500px) {
+    ul {
+      position: fixed;
+      left: 1em;
+      overflow-y: scroll;
+      height: 10em;
+    }
+  }
+
   display: flex;
   flex-direction: column;
   border: 2px solid #c5ced6;
@@ -220,6 +250,15 @@ export const CatalogCallToAction = styled.div`
 `;
 
 export const UserItem = styled.span`
+  /* white-space: initial; */
+  box-sizing: border-box;
+  position: relative;
+  span {
+    overflow-wrap: break-word;
+    inline-size: 60%;
+  }
+
+  max-width: 250px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -271,6 +310,7 @@ export const EnpsSurveyModal = styled.div`
     flex-direction: row;
     justify-content: space-between;
     button:not(:first-of-type) {
+      font-size: 1em;
       margin-left: 10px;
     }
   }

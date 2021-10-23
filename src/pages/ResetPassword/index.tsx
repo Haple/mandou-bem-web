@@ -3,7 +3,8 @@ import { FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { useHistory, useLocation } from 'react-router-dom';
+
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { useToast } from '~/hooks/toast';
 import getValidationErrors from '~/utils/getValidationErrors';
@@ -101,18 +102,19 @@ const ResetPassword: React.FC = () => {
               name="password"
               icon={FiLock}
               type="password"
-              placeholder="Nova senha"
+              label="Nova senha"
             />
 
             <Input
               name="password_confirmation"
               icon={FiLock}
               type="password"
-              placeholder="Confirmação da senha"
+              label="Confirmação da senha"
             />
 
             <Button type="submit">Alterar senha</Button>
           </Form>
+          <Link to="/">Voltar</Link>
         </AnimationContainer>
       </Content>
     </Container>

@@ -6,6 +6,7 @@ import { FormHandles } from '@unform/core';
 import { FiSend } from 'react-icons/fi';
 import ReactTextareaAutocomplete from '@webscopeio/react-textarea-autocomplete';
 import * as Yup from 'yup';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import getValidationErrors from '~/utils/getValidationErrors';
 import '@webscopeio/react-textarea-autocomplete/style.css';
 import defaultAvatar from '~/assets/default-avatar.png';
@@ -170,12 +171,7 @@ const Feed: React.FC = () => {
     [recognitionPosts],
   );
 
-  const handleScroll = useCallback(async () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    )
-      return;
+  const handleNextPage = useCallback(async () => {
     nextRecognitionPosts(page + 1);
     setPage(page + 1);
   }, [nextRecognitionPosts, page]);
@@ -216,9 +212,9 @@ const Feed: React.FC = () => {
   ]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+    window.addEventListener('scroll', handleNextPage);
+    return () => window.removeEventListener('scroll', handleNextPage);
+  }, [handleNextPage]);
 
   const handleSendRecognitionPost = useCallback(async () => {
     if (!selectedPoints) {
@@ -501,9 +497,9 @@ const Feed: React.FC = () => {
             </div>
             <div>
               <Button light onClick={() => toggleEnpsSurveyModal()}>
-                Responder mais tarde
+                Cancelar
               </Button>
-              <Button type="submit">Enviar resposta</Button>
+              <Button type="submit">Enviar</Button>
             </div>
           </Form>
         </EnpsSurveyModal>
@@ -579,63 +575,74 @@ const Feed: React.FC = () => {
           </NewPost>
 
           <PostsList>
-            {recognitionPosts &&
-              recognitionPosts.map((post) => (
-                <Post key={post.id}>
-                  <div>
-                    <img
-                      src={post.from_avatar ? post.from_avatar : defaultAvatar}
-                      alt={post.from_name}
-                      title={post.from_name}
-                    />
-                    <strong>{`+${post.recognition_points}`}</strong>
-                    <img
-                      src={post.to_avatar ? post.to_avatar : defaultAvatar}
-                      alt={post.to_name}
-                      title={post.to_name}
-                    />
-                  </div>
-                  <div>
-                    <b>{`${post.from_name}: `}</b>
-                    <span>{post.content}</span>
-                    <ul>
-                      {post.comments &&
-                        post.comments.map((comment) => (
-                          <li key={post.id + Math.random() * 100}>
-                            <hr />
-                            <b>{`@${comment.user_name}: `}</b>
-                            <span>{comment.content}</span>
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <textarea
-                      id={post.id}
-                      name="new_comment_textarea"
-                      cols={70}
-                      rows={1}
-                      placeholder="Faça um comentário"
-                      value={post.new_comment_textarea}
-                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                        handleCommentTextareaChange(e.target.value, post);
-                      }}
-                    />
-                    <Button
-                      light
-                      type="submit"
-                      onClick={() => {
-                        handleSendPostComment(
-                          post.id,
-                          post.new_comment_textarea,
-                        );
-                      }}
-                    >
-                      Comentar
-                    </Button>
-                  </div>
-                </Post>
-              ))}
+            <InfiniteScroll
+              dataLength={recognitionPosts.length}
+              next={handleNextPage}
+              hasMore
+              loader={<></>}
+            >
+              {recognitionPosts &&
+                recognitionPosts.map((post) => (
+                  <Post key={post.id}>
+                    <div className="fromTo">
+                      <img
+                        src={
+                          post.from_avatar ? post.from_avatar : defaultAvatar
+                        }
+                        alt={post.from_name}
+                        title={post.from_name}
+                      />
+                      <strong>{`+${post.recognition_points}`}</strong>
+                      <img
+                        src={post.to_avatar ? post.to_avatar : defaultAvatar}
+                        alt={post.to_name}
+                        title={post.to_name}
+                      />
+                    </div>
+                    <div className="content">
+                      <b>{`${post.from_name}: `}</b>
+                      <span>{post.content}</span>
+                      <ul>
+                        {post.comments &&
+                          post.comments.map((comment) => (
+                            <li key={post.id + Math.random() * 100}>
+                              <hr />
+                              <b>{`@${comment.user_name}: `}</b>
+                              <span>{comment.content}</span>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                    <div className="comments">
+                      <textarea
+                        id={post.id}
+                        name="new_comment_textarea"
+                        cols={70}
+                        rows={1}
+                        placeholder="Faça um comentário"
+                        value={post.new_comment_textarea}
+                        onChange={(
+                          e: React.ChangeEvent<HTMLTextAreaElement>,
+                        ) => {
+                          handleCommentTextareaChange(e.target.value, post);
+                        }}
+                      />
+                      <Button
+                        light
+                        type="submit"
+                        onClick={() => {
+                          handleSendPostComment(
+                            post.id,
+                            post.new_comment_textarea,
+                          );
+                        }}
+                      >
+                        Comentar
+                      </Button>
+                    </div>
+                  </Post>
+                ))}
+            </InfiniteScroll>
           </PostsList>
         </Content>
         <aside>

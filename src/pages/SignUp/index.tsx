@@ -95,16 +95,19 @@ const SignUp: React.FC = () => {
         </HeaderContent>
       </Header>
 
-      <img src={drawCelebration} alt="Ilustração de pessoas celebrando" />
-
       <Content>
-        <span>
-          Estamos super contentes de te ver por aqui!
+        <div className="welcome">
+          <img src={drawCelebration} alt="Ilustração de pessoas celebrando" />
           <br />
-          <br />
-          Nos conte mais sobre você e veja como é fácil cuidar dos seus
-          colaboradores.
-        </span>
+          <span>
+            Estamos super contentes de te ver por aqui!
+            <br />
+            <br />
+            Nos conte mais sobre você e veja como é fácil cuidar dos seus
+            colaboradores.
+          </span>
+        </div>
+
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
             <Input

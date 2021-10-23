@@ -349,10 +349,10 @@ const Catalog: React.FC = () => {
       </Modal>
 
       <Container>
-        <h2>
+        <h3>
           Você tem <span>{userData.recognition_points} pontos</span> para
           resgatar
-        </h2>
+        </h3>
         <Content>
           {catalog &&
             catalog.map((catalogReward) => (

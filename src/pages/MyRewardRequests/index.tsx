@@ -5,6 +5,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 
 import { format, parseISO } from 'date-fns';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { FaEye, FaQrcode, FaQuestionCircle } from 'react-icons/fa';
 import Header from '~/components/Header';
@@ -173,13 +174,7 @@ const MyRewardRequests: React.FC = () => {
     handleGetRewardRequests();
   }, [handleGetRewardRequests]);
 
-  const handleScroll = useCallback(async () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    )
-      return;
-
+  const handleNextPage = useCallback(async () => {
     const answers = await getRewardRequests(page + 1);
     setRewardRequests([...rewardRequests, ...answers]);
     setPage(page + 1);
@@ -191,11 +186,6 @@ const MyRewardRequests: React.FC = () => {
     },
     [],
   );
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
 
   return (
     <>
@@ -331,7 +321,7 @@ const MyRewardRequests: React.FC = () => {
       </Modal>
 
       <Container>
-        <h2>Meus Resgates de Prêmios</h2>
+        <h3>Meus Resgates de Prêmios</h3>
         <br />
         <Content>
           <SearchOptions>
@@ -383,27 +373,28 @@ const MyRewardRequests: React.FC = () => {
             </Form>
           </SearchOptions>
           <br />
-          <RewardRequestsContainer>
-            {rewardRequests &&
-              rewardRequests.map((rewardRequest) => (
-                <RewardRequest key={rewardRequest.id}>
-                  <div className="summary">
+          <InfiniteScroll
+            dataLength={rewardRequests.length}
+            next={handleNextPage}
+            hasMore
+            loader={<></>}
+          >
+            <RewardRequestsContainer>
+              {rewardRequests &&
+                rewardRequests.map((rewardRequest) => (
+                  <RewardRequest key={rewardRequest.id}>
                     <span>
                       <label>Prêmio: </label>
                       {rewardRequest.reward_title}
                     </span>
-                    <br />
                     <span>
                       <label>Status: </label>
                       {rewardRequest.status_formatted}
                     </span>
-                    <br />
                     <img
                       src={rewardRequest.image_url}
                       alt={`Imagem do prêmio '${rewardRequest.reward_title}'`}
                     />
-                  </div>
-                  <div className="actions">
                     {rewardRequest.status === 'reproved' && (
                       <Button
                         light
@@ -433,10 +424,10 @@ const MyRewardRequests: React.FC = () => {
                       <FaEye />
                       Exibir detalhes
                     </Button>
-                  </div>
-                </RewardRequest>
-              ))}
-          </RewardRequestsContainer>
+                  </RewardRequest>
+                ))}
+            </RewardRequestsContainer>
+          </InfiniteScroll>
         </Content>
       </Container>
     </>

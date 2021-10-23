@@ -6,9 +6,10 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  h2 {
-    margin-top: 20px;
+  h3 {
+    margin-top: 1em;
     color: #788896;
+    text-align: center;
   }
 `;
 
@@ -18,8 +19,10 @@ export const Content = styled.div`
     grid-template-columns: 1fr 1fr;
   } */
   width: 100%;
-  display: grid;
-  place-items: center;
+  max-width: 1000px;
+
+  /* display: grid;
+  place-items: center; */
 
   h3 {
     font-weight: bold;
@@ -27,9 +30,17 @@ export const Content = styled.div`
 `;
 
 export const RewardRequestsContainer = styled.div`
-  width: 80%;
+  overflow-x: auto;
+  width: 100%;
   font-size: 16px;
   color: #293845;
+
+  @media (min-width: 700px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-row-gap: 1em;
+    grid-column-gap: 1em;
+  }
 
   table {
     background: #fff;
@@ -60,48 +71,48 @@ export const RewardRequest = styled.div`
   background: #fff;
   border: 2px solid #c5ced6;
   width: 100%;
+  max-width: 400px;
   padding: 15px;
 
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
 
-  .summary {
-    text-align: left;
-    width: 60%;
-
-    span {
-      label {
-        font-weight: bold;
-      }
-    }
-
-    img {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-        0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      margin: 10px 0px;
-      max-width: 250px;
+  span {
+    label {
+      font-weight: bold;
     }
   }
 
-  .actions {
-    width: 30%;
+  img {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 10px 0px;
+    max-width: 250px;
+    align-self: center;
+  }
+
+  /* .actions {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
+  } */
 `;
 
 export const SearchOptions = styled.div`
   background: #fff;
   border: 2px solid #c5ced6;
-  width: 80%;
+  width: 100%;
   padding: 15px;
 
   div {
     margin: 5px;
     display: flex;
     flex-direction: row;
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
   }
 
   .actions {
