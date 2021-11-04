@@ -161,29 +161,29 @@ const Profile: React.FC = () => {
               </label>
             </AvatarInput>
 
-            <Input name="name" icon={FiUser} placeholder="Nome" />
-            <Input name="email" icon={FiMail} placeholder="E-mail" />
+            <Input name="name" icon={FiUser} label="Nome" />
+            <Input name="email" icon={FiMail} label="E-mail" />
 
             <Input
               containerStyle={{ marginTop: 24 }}
               name="old_password"
               icon={FiLock}
               type="password"
-              placeholder="Senha atual"
+              label="Senha atual"
             />
 
             <Input
               name="password"
               icon={FiLock}
               type="password"
-              placeholder="Nova senha"
+              label="Nova senha"
             />
 
             <Input
               name="password_confirmation"
               icon={FiLock}
               type="password"
-              placeholder="Confirmar senha"
+              label="Confirmar senha"
             />
 
             <Button type="submit">Confirmar Mudanças</Button>
